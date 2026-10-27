@@ -1,0 +1,11 @@
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="../../../build/LegacyX.props" />
+  <PropertyGroup><AssemblyName>TomSkinSDF</AssemblyName><RootNamespace>TomShadersX</RootNamespace></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../Core/TomRender.Core/TomRender.Core.csproj" />
+    <RuntimeSource Include="TomSkinSDFHead.cs" /><RuntimeSource Include="TomSkinSDFPlugin.cs" />
+    <Compile Include="@(RuntimeSource)" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)/Microsoft.CSharp.targets" />
+  <Import Project="../../../build/LegacyX.targets" />
+</Project>

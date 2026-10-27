@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyName>TomRender.UnityValidation</AssemblyName>
+    <LangVersion>7.3</LangVersion>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <UnityEditorRoot Condition="'$(UnityEditorRoot)' == ''">D:/Document/Unity/Editor</UnityEditorRoot>
+    <UnityManaged>$(UnityEditorRoot)/Data/Managed</UnityManaged>
+    <UnityProjectRoot Condition="'$(UnityProjectRoot)' == ''">D:/Document/download/md/KoikatsuSunshineModdingTools-main</UnityProjectRoot>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Runtime.Serialization" Private="false" />
+    <ProjectReference Include="../../src/Core/TomRender.Core/TomRender.Core.csproj" />
+    <ProjectReference Include="../../src/BSDF/TomBSDF.Runtime/TomBSDF.Runtime.csproj" />
+    <ProjectReference Include="../../src/Probe/TomProbe.Runtime/TomProbe.Runtime.csproj" />
+    <Reference Include="Assembly-CSharp" HintPath="$(UnityProjectRoot)/Library/ScriptAssemblies/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="UnityEditor" HintPath="$(UnityManaged)/UnityEngine/UnityEditor.dll" Private="false" />
+    <Reference Include="UnityEngine" HintPath="$(UnityManaged)/UnityEngine/UnityEngine.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(UnityManaged)/UnityEngine/UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="UnityEngine.ImageConversionModule" HintPath="$(UnityManaged)/UnityEngine/UnityEngine.ImageConversionModule.dll" Private="false" />
+    <Reference Include="UnityEngine.PhysicsModule" HintPath="$(UnityManaged)/UnityEngine/UnityEngine.PhysicsModule.dll" Private="false" />
+    <Reference Include="UnityEngine.JSONSerializeModule" HintPath="$(UnityManaged)/UnityEngine/UnityEngine.JSONSerializeModule.dll" Private="false" />
+  </ItemGroup>
+</Project>

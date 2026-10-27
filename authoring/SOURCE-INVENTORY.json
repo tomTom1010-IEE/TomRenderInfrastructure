@@ -1,0 +1,270 @@
+{
+    "unity": "2019.4.9f1",
+    "files": [
+        {
+            "path": "Assets/Mods/TomLightingProbes.meta",
+            "sha256": "921403b371aa4af871d1898e2dbc635133084118086ad0103010e493d106fe92",
+            "bytes": 172
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/List.meta",
+            "sha256": "76bc38ebca817931c47dd25e4ac129c5be6be4ecb9c0268173a043138bf56ab9",
+            "bytes": 172
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/List/Studio.meta",
+            "sha256": "cd27a94ef7cd495dd34f61ed99e7df4a6226aed6777bd87bbc4912772939d907",
+            "bytes": 172
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/List/Studio/tom_lighting_probes.meta",
+            "sha256": "bed1a6d72f40e6e1aea158e2d442864388ff8412b764477190d3376c36c513a3",
+            "bytes": 172
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/List/Studio/tom_lighting_probes/ItemCategory_00_101010.csv",
+            "sha256": "8daf5b636c72fba7218c421b2ae7ed71549e9440e961e8b6a2fe7abbf44c73d3",
+            "bytes": 38
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/List/Studio/tom_lighting_probes/ItemCategory_00_101010.csv.meta",
+            "sha256": "ce2c23ceae7b074e6dd6272379db10adc9b4c2dde4756fae3781002eb2259eb9",
+            "bytes": 158
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/List/Studio/tom_lighting_probes/ItemGroup_tom_lighting_probes.csv",
+            "sha256": "81de5937bb6373ea65e83626417b33258bebc5efbe0973d501c9489118ae7af7",
+            "bytes": 38
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/List/Studio/tom_lighting_probes/ItemGroup_tom_lighting_probes.csv.meta",
+            "sha256": "36a303d436ba81492646f76ee4b19502a1646ac2c260d32c7fdfe80f17ed19ff",
+            "bytes": 158
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/List/Studio/tom_lighting_probes/ItemList_00_101010_101010001.csv",
+            "sha256": "24a824ef4a65ea7664f0100696e9a6bc516358cf5f65d7ee5a6056639106c84b",
+            "bytes": 1003
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/List/Studio/tom_lighting_probes/ItemList_00_101010_101010001.csv.meta",
+            "sha256": "9958ff36ef1ba091305cac98311de39e5a6d19eb50944fd4f6990f6f6a98d643",
+            "bytes": 158
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Material.meta",
+            "sha256": "a65646a24bc8907406a45d7e9b156a0532b68000778daea20a58e4df77c9d09a",
+            "bytes": 172
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Material/ProbeControlCarrier.asset",
+            "sha256": "fa56ddabf34c2a66beface1c05a1c4bd4615ad160c67011a653d06b754941c5a",
+            "bytes": 3176
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Material/ProbeControlCarrier.asset.meta",
+            "sha256": "0986d3bf9fcd641fa803093fade28b0b3a5f164610fef35b7cc0ee566f13c02a",
+            "bytes": 182
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Material/m_a_TomReflectionProbe1024.mat",
+            "sha256": "aac80f8a26bb066f3e405a3bb490a7c857c1bc83fdcda9c6907dffb1a67cc470",
+            "bytes": 1316
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Material/m_a_TomReflectionProbe1024.mat.meta",
+            "sha256": "f925ddbfee0e9ef193b9f929cdbc6876ac9667a88184f3e77ee85f14d69dd90a",
+            "bytes": 182
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Material/m_a_TomReflectionProbe256.mat",
+            "sha256": "29c390d52985fc008a318d026ab4fdfcff707ed8e1071e4abda56a3158ece685",
+            "bytes": 1315
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Material/m_a_TomReflectionProbe256.mat.meta",
+            "sha256": "a45492c27b301e925f4659c4e662abc890984ab4035d804d33ca3197027f8f09",
+            "bytes": 182
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Material/m_a_TomReflectionProbe512.mat",
+            "sha256": "6c071ec34f8a171959f9c9e5d28ae7ca5ea421c48c54a67ca8f3cc70521ffeae",
+            "bytes": 1315
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Material/m_a_TomReflectionProbe512.mat.meta",
+            "sha256": "1e5d789c42880f5ef03e125788ba1d7cfadd6a99ac5250879c942eceefd44840",
+            "bytes": 182
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Material/m_a_TomSHVolumeFast.mat",
+            "sha256": "e823a4a8ff9e8ab06ab5a272f75daa1e4daba0acb13ec946dd39b37f3f1893aa",
+            "bytes": 1346
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Material/m_a_TomSHVolumeFast.mat.meta",
+            "sha256": "b7f4022c4cc9fb0c757ca43a64260236a023dc5c19ea2fe439130441f60130c9",
+            "bytes": 182
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Material/m_a_TomSHVolumeStandard.mat",
+            "sha256": "9fca42cbdca78178aeeb94717c417c773e17a5bfd3a27ce46bd2876d31dda0fd",
+            "bytes": 1350
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Material/m_a_TomSHVolumeStandard.mat.meta",
+            "sha256": "d835126d1351ce944b913129f0712244f08c7dbc7120808c0373f31cfd56611a",
+            "bytes": 182
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Prefab.meta",
+            "sha256": "8ede2ab3e1915d917751495f030c7e253530fbc9ad8ce087c7a299f7dda6e067",
+            "bytes": 172
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Prefab/a_TomReflectionProbe1024.prefab",
+            "sha256": "434adcc293d413df8b2a01a65328b289eee275b4bbd52e5f27b5b2b6ed62c7f6",
+            "bytes": 5888
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Prefab/a_TomReflectionProbe1024.prefab.meta",
+            "sha256": "66e612440aeb3629358563684d7bd5dd50b09ac73bb2dd248949218220ae20b9",
+            "bytes": 192
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Prefab/a_TomReflectionProbe256.prefab",
+            "sha256": "9b5a8be60ec69fc4f17a82fc087a084f134826708d34e91ba9a602e2b57507d0",
+            "bytes": 5877
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Prefab/a_TomReflectionProbe256.prefab.meta",
+            "sha256": "8a2eb529d16aeec588d676c6f3a6ddda713ca55b1464105972eee270ab13e8e5",
+            "bytes": 192
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Prefab/a_TomReflectionProbe512.prefab",
+            "sha256": "fd509ec82d9aaac687c763a68cf4a607e3767bd1fbe2060b25c5d6e60d691f87",
+            "bytes": 5887
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Prefab/a_TomReflectionProbe512.prefab.meta",
+            "sha256": "09dab5a64364e75e278fdf31819a956687bb3c785757ab8be66e1940b20587f3",
+            "bytes": 192
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Prefab/a_TomSHVolumeFast.prefab",
+            "sha256": "d977f9d3a6bff7da13a392d949e7281a85d929cf0e057534e7244a5d6dae7d58",
+            "bytes": 5034
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Prefab/a_TomSHVolumeFast.prefab.meta",
+            "sha256": "fdf2a2e97911126e8b395331925b0eb34fe84967222a8d87242f77f66984764e",
+            "bytes": 192
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Prefab/a_TomSHVolumeStandard.prefab",
+            "sha256": "6071ac00bdfb756385e9298940027c395e97bcd719080cce08b51b1ddcebe79f",
+            "bytes": 5038
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Prefab/a_TomSHVolumeStandard.prefab.meta",
+            "sha256": "65c2a4ee9316e72365251447d8efd164bb9818b19988fad1646f07a97172c32e",
+            "bytes": 192
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Runtime.meta",
+            "sha256": "f430f6959c7f00836358c75c1bbec52797fd5056cff1556a7acc0d4e99ff4107",
+            "bytes": 172
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Runtime/TomProbe.Runtime.dll",
+            "sha256": "147c69ebdd98eaa9494038c1e680f40f45d3096e10d779f31b0ea9b9e7164015",
+            "bytes": 38400
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Runtime/TomProbe.Runtime.dll.meta",
+            "sha256": "5b7bbf3283e9cae05066cf2c9a073cf0ea10a285c6d8ac6798a30f0606c8b381",
+            "bytes": 645
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Shaders.meta",
+            "sha256": "033867c71d0af1e21505a40a38d2e1979ed378f0c454f0b0e2d63bb6fc56e0ef",
+            "bytes": 172
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Shaders/ProbeBackground.shader",
+            "sha256": "d152da2627e94a691f2ba15c6ea950f9afbaf12bd6e51198f3c42f0b63c7f5ab",
+            "bytes": 732
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Shaders/ProbeBackground.shader.meta",
+            "sha256": "4b6c96433f8071cc5a8ea4397969af540223375f06c5703be0a18dc3497946d4",
+            "bytes": 204
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Shaders/ReflectionProbeControl.shader",
+            "sha256": "ef2ccb65ef63f1c38531a4313ec5af44ee729e3abc85df7893c6a20e6c73fddb",
+            "bytes": 2581
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Shaders/ReflectionProbeControl.shader.meta",
+            "sha256": "ba6b4450851f3186dd0b5890d0205fef76e92f6d91fe866103a12eb2c9abacf3",
+            "bytes": 204
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Shaders/SHVolumeControl.shader",
+            "sha256": "6b0b45994ff0d61da59a2af23ccd41cade2b2e5534aa6bc40cc03745ebc2af43",
+            "bytes": 2677
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Shaders/SHVolumeControl.shader.meta",
+            "sha256": "dd9687f9ea4a665846ad36ed26fe12d072deb809dbd67d2775e49019d5f7f30f",
+            "bytes": 204
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Tooltips.meta",
+            "sha256": "339a1206b6c4c5263e4c1935a75261d7366393f85ea3008d269f8b1f9ae463b8",
+            "bytes": 172
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Tooltips/tom_probe_tooltips.xml",
+            "sha256": "32a62585365b55d1bb9ad1cbf4c58c1853b052b96bffbb9171be1b843b683f3f",
+            "bytes": 10555
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/Tooltips/tom_probe_tooltips.xml.meta",
+            "sha256": "dd0df5e542697d9e1ad8665b6e2b08afcfd531dfb3b4df1ff20b80231e672308",
+            "bytes": 158
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/manifest.xml",
+            "sha256": "af7b2b1544841146b9fbc8c124aa9e165f99f58945ddca6561af3eb1a930bf73",
+            "bytes": 5939
+        },
+        {
+            "path": "Assets/Mods/TomLightingProbes/manifest.xml.meta",
+            "sha256": "50020d840d7997f8db6e4bd2db3b02d8b1d22c4d09622d805c8ad3538614ad3c",
+            "bytes": 158
+        },
+        {
+            "path": "Assets/TomRenderInfrastructure.meta",
+            "sha256": "ad2084358137df91f766b26ae3ca7d8e72f9ca5a8ac0a77678071858bd2be214",
+            "bytes": 172
+        },
+        {
+            "path": "Assets/TomRenderInfrastructure/Runtime.meta",
+            "sha256": "1d0fe671acc48888dcb67c34888c2db47a013ebae2b780fb97de0fafd272f341",
+            "bytes": 172
+        },
+        {
+            "path": "Assets/TomRenderInfrastructure/Runtime/TomRender.Core.dll",
+            "sha256": "a96528f122a4ea7afdeba3c05b1b35e23d5daac21227118edb2198729e95f94f",
+            "bytes": 35328
+        },
+        {
+            "path": "Assets/TomRenderInfrastructure/Runtime/TomRender.Core.dll.meta",
+            "sha256": "fe865f743417fc7cea4899d3555f42ac8736a7e488ab5ed0075798a66fd0cb28",
+            "bytes": 645
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+<Project>
+  <Import Project="$(MSBuildThisFileDirectory)Local.props" Condition="Exists('$(MSBuildThisFileDirectory)Local.props')" />
+  <PropertyGroup>
+    <GameRoot Condition="'$(GameRoot)' == '' and '$(KKS_GAME_ROOT)' != ''">$(KKS_GAME_ROOT)</GameRoot>
+    <GameRoot Condition="'$(GameRoot)' == ''">D:/Program Files/KoikatuSunshine</GameRoot>
+    <BaseOutputPath>$(MSBuildThisFileDirectory)artifacts/bin/$(MSBuildProjectName)/</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)artifacts/obj/$(MSBuildProjectName)/</BaseIntermediateOutputPath>
+  </PropertyGroup>
+</Project>

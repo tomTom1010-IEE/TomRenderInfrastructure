@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MaterialEditorTooltips SchemaVersion="1">
+  <Shader Name="tom/ReflectionProbeControl">
+    <Tooltip>Control material only. Requires Tom Probe Runtime 0.2. World-aligned bounds ignore Studio rotation and scale. Use Size and Offset parameters.</Tooltip>
+    <Property Name="ProbeEnabled">Enable both capture requests and lighting contribution. Studio item visibility is an additional gate; it does not modify this saved value.</Property>
+    <Property Name="ProbeIntensity">Lighting multiplier, 0 to 8. Applies without recapture. SH affects diffuse indirect only; reflection uses native probe intensity.</Property>
+    <Property Name="ProbePriority">Higher values take precedence in overlapping bounds. SH selects one volume per renderer; this is not a multi-volume per-pixel blend.</Property>
+    <Property Name="ProbeGroup">Integer group number, 0 to 999. Used by RefreshScope=1; it does not restrict which objects receive lighting.</Property>
+    <Property Name="ProbeRefreshScope">0 current item; 1 enabled items with the same group number; 2 all enabled Tom probes. SH finishes before reflection in a shared refresh batch.</Property>
+    <Property Name="ProbeRefresh">Change 0 to 1 or 1 to 0 to request one capture. Loading saved values does not replay this command. Never auto-reset this value.</Property>
+    <Property Name="ProbeUpdateMode">0 load only; 1 debounce position/configuration changes; 2 timed updates; 3 manual. Capture settings changes invalidate data in every mode. Rotation and scale are ignored.</Property>
+    <Property Name="ProbeCaptureOnLoad">Wait for stable restored material settings, then capture on load/enable. A late restored sky invalidates the capture automatically. Scene files store settings, not captured cubemaps/SH atlases.</Property>
+    <Property Name="ProbeInterval">Seconds between requests, not a guaranteed completion period. Requests coalesce while busy. SH minimum is 5 seconds.</Property>
+    <Property Name="ProbeNearClip">Near clipping plane for every capture face. Not a spherical radius or reliable self-exclusion. Use capture layers to omit characters.</Property>
+    <Property Name="ProbeFarClip">Far clipping plane in world units for each capture face. Clamped above NearClip; a small value omits distant environment.</Property>
+    <Property Name="ProbeShadowDistance">Maximum shadow distance during capture. Does not change the main view's shadow-distance setting.</Property>
+    <Property Name="ProbeCapturePreset">0 excludes named Chara and Action/Chara layers; 1 includes them; 2 uses the two custom 16-bit masks. Custom-layer characters need a custom mask. This is not per-object exclusion.</Property>
+    <Property Name="ProbeMaskLow">Custom mask, bits 0-15 as an unsigned integer. Used only by CapturePreset=2. Values are rounded.</Property>
+    <Property Name="ProbeMaskHigh">Custom mask, bits 16-31 as an unsigned integer. Used only by CapturePreset=2. Split halves avoid float precision loss.</Property>
+    <Property Name="ProbeSkybox">1 snapshots RenderSettings.skybox, including exposure and rotation, for all capture faces; 0 uses the linear HDR Background Color. Does not bake main-camera postprocessing.</Property>
+    <Property Name="ProbeBackground">Linear RGB radiance when Skybox=0 or no scene sky exists. HDR capture preserves values above 1. Not a display color; no additional sRGB decode. Requires matching TomProbe 0.2.2 zipmod and DLLs.</Property>
+    <Property Name="ProbeSizeX">World-axis X extent of the influence bounds. Ignores item/parent rotation and scale; changing SH bounds requires recapture.</Property>
+    <Property Name="ProbeSizeY">World-axis Y extent of the influence bounds. Ignores item/parent rotation and scale; changing SH bounds requires recapture.</Property>
+    <Property Name="ProbeSizeZ">World-axis Z extent of the influence bounds. Ignores item/parent rotation and scale; changing SH bounds requires recapture.</Property>
+    <Property Name="ProbeOffsetX">World-axis X offset from the item's world position. Ignores item rotation and scale.</Property>
+    <Property Name="ProbeOffsetY">World-axis Y offset from the item's world position. Ignores item rotation and scale.</Property>
+    <Property Name="ProbeOffsetZ">World-axis Z offset from the item's world position. Ignores item rotation and scale.</Property>
+    <Property Name="ProbeQuality">0=256, 1=512, 2=1024 pixels per face. Rounded and clamped; no reimport required.</Property>
+    <Property Name="ProbeHDR">HDR capture. Changing HDR rebuilds the internal runtime probe and requests a new capture; the Studio item is retained.</Property>
+    <Property Name="ProbeBoxProjection">Unity box-projected reflection using the explicit world bounds. Requires receiver shader support.</Property>
+    <Property Name="ProbeBlendDistance">Native reflection blend distance at the volume boundary, in world units. Requires receiver shader support.</Property>
+    <Property Name="ProbeTimeSlicing">0=AllFacesAtOnce, 1=IndividualFaces, 2=NoTimeSlicing. Applied on the next capture. NoTimeSlicing can stall a frame.</Property>
+  </Shader>
+  <Shader Name="tom/SHVolumeControl">
+    <Tooltip>Control material only. Requires Tom Probe Runtime 0.2. World-aligned bounds ignore Studio rotation and scale. Use Size and Offset parameters.</Tooltip>
+    <Property Name="ProbeEnabled">Enable both capture requests and lighting contribution. Studio item visibility is an additional gate; it does not modify this saved value.</Property>
+    <Property Name="ProbeIntensity">Lighting multiplier, 0 to 8. Applies without recapture. SH affects diffuse indirect only; reflection uses native probe intensity.</Property>
+    <Property Name="ProbePriority">Higher values take precedence in overlapping bounds. SH selects one volume per renderer; this is not a multi-volume per-pixel blend.</Property>
+    <Property Name="ProbeGroup">Integer group number, 0 to 999. Used by RefreshScope=1; it does not restrict which objects receive lighting.</Property>
+    <Property Name="ProbeRefreshScope">0 current item; 1 enabled items with the same group number; 2 all enabled Tom probes. SH finishes before reflection in a shared refresh batch.</Property>
+    <Property Name="ProbeRefresh">Change 0 to 1 or 1 to 0 to request one capture. Loading saved values does not replay this command. Never auto-reset this value.</Property>
+    <Property Name="ProbeUpdateMode">0 load only; 1 debounce position/configuration changes; 2 timed updates; 3 manual. Capture settings changes invalidate data in every mode. Rotation and scale are ignored.</Property>
+    <Property Name="ProbeCaptureOnLoad">Wait for stable restored material settings, then capture on load/enable. A late restored sky invalidates the capture automatically. Scene files store settings, not captured cubemaps/SH atlases.</Property>
+    <Property Name="ProbeInterval">Seconds between requests, not a guaranteed completion period. Requests coalesce while busy. SH minimum is 5 seconds.</Property>
+    <Property Name="ProbeNearClip">Near clipping plane for every capture face. Not a spherical radius or reliable self-exclusion. Use capture layers to omit characters.</Property>
+    <Property Name="ProbeFarClip">Far clipping plane in world units for each capture face. Clamped above NearClip; a small value omits distant environment.</Property>
+    <Property Name="ProbeShadowDistance">Maximum shadow distance during capture. Does not change the main view's shadow-distance setting.</Property>
+    <Property Name="ProbeCapturePreset">0 excludes named Chara and Action/Chara layers; 1 includes them; 2 uses the two custom 16-bit masks. Custom-layer characters need a custom mask. This is not per-object exclusion.</Property>
+    <Property Name="ProbeMaskLow">Custom mask, bits 0-15 as an unsigned integer. Used only by CapturePreset=2. Values are rounded.</Property>
+    <Property Name="ProbeMaskHigh">Custom mask, bits 16-31 as an unsigned integer. Used only by CapturePreset=2. Split halves avoid float precision loss.</Property>
+    <Property Name="ProbeSkybox">1 snapshots RenderSettings.skybox, including exposure and rotation, for all capture faces; 0 uses the linear HDR Background Color. Does not bake main-camera postprocessing.</Property>
+    <Property Name="ProbeBackground">Linear RGB radiance when Skybox=0 or no scene sky exists. HDR capture preserves values above 1. Not a display color; no additional sRGB decode. Requires matching TomProbe 0.2.2 zipmod and DLLs.</Property>
+    <Property Name="ProbeSizeX">World-axis X extent of the influence bounds. Ignores item/parent rotation and scale; changing SH bounds requires recapture.</Property>
+    <Property Name="ProbeSizeY">World-axis Y extent of the influence bounds. Ignores item/parent rotation and scale; changing SH bounds requires recapture.</Property>
+    <Property Name="ProbeSizeZ">World-axis Z extent of the influence bounds. Ignores item/parent rotation and scale; changing SH bounds requires recapture.</Property>
+    <Property Name="ProbeOffsetX">World-axis X offset from the item's world position. Ignores item rotation and scale.</Property>
+    <Property Name="ProbeOffsetY">World-axis Y offset from the item's world position. Ignores item rotation and scale.</Property>
+    <Property Name="ProbeOffsetZ">World-axis Z offset from the item's world position. Ignores item rotation and scale.</Property>
+    <Property Name="SHGridX">Sample count on world axis X, rounded to 2 through 8. Total capture cost is GridX times GridY times GridZ.</Property>
+    <Property Name="SHGridY">Sample count on world axis Y, rounded to 2 through 8. Total capture cost is GridX times GridY times GridZ.</Property>
+    <Property Name="SHGridZ">Sample count on world axis Z, rounded to 2 through 8. Total capture cost is GridX times GridY times GridZ.</Property>
+    <Property Name="SHCaptureQuality">0=8, 1=16, 2=32, 3=64 pixels per cubemap face. This controls SH integration quality, not spatial sample count.</Property>
+    <Property Name="SHEdgeFade">Boundary fade as a fraction of volume size, 0 to 0.49. Blends custom diffuse back to the receiver's normal indirect lighting.</Property>
+    <Property Name="SHSamplesPerFrame">Per-volume requested sample budget, also limited by the plugin global budget. Each sample renders six faces plus synchronous CPU readback.</Property>
+    <Property Name="ProbeOcclusionCulling">Use baked scene occlusion culling during SH capture. Disable to diagnose incorrectly omitted geometry.</Property>
+  </Shader>
+</MaterialEditorTooltips>

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: m_a_TomSHVolumeFast
+  m_Shader: {fileID: 4800000, guid: 7505b9c3d88583744a75cac1f23d8c74, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - _ProbeCaptureOnLoad: 1
+    - _ProbeCapturePreset: 0
+    - _ProbeEnabled: 1
+    - _ProbeFarClip: 100
+    - _ProbeGroup: 0
+    - _ProbeIntensity: 1
+    - _ProbeInterval: 30
+    - _ProbeMaskHigh: 65535
+    - _ProbeMaskLow: 65535
+    - _ProbeNearClip: 0.1
+    - _ProbeOcclusionCulling: 1
+    - _ProbeOffsetX: 0
+    - _ProbeOffsetY: 0
+    - _ProbeOffsetZ: 0
+    - _ProbePriority: 0
+    - _ProbeRefresh: 0
+    - _ProbeRefreshScope: 0
+    - _ProbeShadowDistance: 50
+    - _ProbeSizeX: 8
+    - _ProbeSizeY: 4
+    - _ProbeSizeZ: 8
+    - _ProbeSkybox: 1
+    - _ProbeUpdateMode: 1
+    - _SHCaptureQuality: 1
+    - _SHEdgeFade: 0.15
+    - _SHGridX: 3
+    - _SHGridY: 2
+    - _SHGridZ: 3
+    - _SHSamplesPerFrame: 1
+    m_Colors:
+    - _ProbeBackground: {r: 0, g: 0, b: 0, a: 1}

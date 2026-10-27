@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "source": "Codex Bridge AssetDatabase GUID/localFileId and MonoScript.GetClass, before runtime authoring integration",
+  "identities": [
+    {
+      "assembly": "Assembly-CSharp",
+      "guid": "b0caec04f47248c49ae69f69636abe28",
+      "localFileId": 11500000,
+      "path": "Assets/Mods/TomShadersX/Runtime/TomHairFeatherCamera.cs",
+      "type": "TomShadersX.TomHairFeatherCamera"
+    },
+    {
+      "assembly": "Assembly-CSharp",
+      "guid": "cc515c9ef033f604498c65b2196f226d",
+      "localFileId": 11500000,
+      "path": "Assets/Mods/TomShadersX/Runtime/TomSkinSDFHead.cs",
+      "type": "TomShadersX.TomSkinSDFHead"
+    },
+    {
+      "assembly": "Assembly-CSharp",
+      "guid": "735bd5498192d5b42a4dc71b5fa8b35c",
+      "localFileId": 11500000,
+      "path": "Assets/Mods/TomShadersX/Runtime/TomTessellationBounds.cs",
+      "type": "TomShadersX.TomTessellationBounds"
+    },
+    {
+      "assembly": "Assembly-CSharp",
+      "guid": "8185443519002da4db61794442be82f1",
+      "localFileId": 11500000,
+      "path": "Assets/TomSceneEffects/Runtime/TomDofOpaqueRelay.cs",
+      "type": "TomSceneEffects.TomDofOpaqueRelay"
+    },
+    {
+      "assembly": "TomBSDF.Runtime",
+      "guid": "7cb6354202869d24ab810344a376ca8b",
+      "localFileId": -531023719,
+      "path": "Assets/Mods/TomShadersBSDF/Runtime/TomBSDF.Runtime.dll",
+      "type": "TomBSDFRuntime.TomBSDFDiagnostics"
+    },
+    {
+      "assembly": "TomBSDF.Runtime",
+      "guid": "7cb6354202869d24ab810344a376ca8b",
+      "localFileId": 1061070487,
+      "path": "Assets/Mods/TomShadersBSDF/Runtime/TomBSDF.Runtime.dll",
+      "type": "TomBSDFRuntime.TomBSDFSceneBufferResources"
+    },
+    {
+      "assembly": "TomBSDF.Runtime",
+      "guid": "7cb6354202869d24ab810344a376ca8b",
+      "localFileId": 3329101,
+      "path": "Assets/Mods/TomShadersBSDF/Runtime/TomBSDF.Runtime.dll",
+      "type": "TomBSDFRuntime.TomBSDFSceneService"
+    },
+    {
+      "assembly": "TomBSDF.Runtime",
+      "guid": "7cb6354202869d24ab810344a376ca8b",
+      "localFileId": -1407860297,
+      "path": "Assets/Mods/TomShadersBSDF/Runtime/TomBSDF.Runtime.dll",
+      "type": "TomBSDFRuntime.TomBSDFShadowResources"
+    },
+    {
+      "assembly": "TomBSDF.Runtime",
+      "guid": "7cb6354202869d24ab810344a376ca8b",
+      "localFileId": -175190270,
+      "path": "Assets/Mods/TomShadersBSDF/Runtime/TomBSDF.Runtime.dll",
+      "type": "TomBSDFRuntime.TomRectAreaLightControl"
+    },
+    {
+      "assembly": "TomProbe.Runtime",
+      "guid": "3a74c9c2cb0659544bbf9505e46f9f57",
+      "localFileId": 1722390231,
+      "path": "Assets/Mods/TomLightingProbes/Runtime/TomProbe.Runtime.dll",
+      "type": "TomProbeRuntime.TomReflectionProbeController"
+    },
+    {
+      "assembly": "TomProbe.Runtime",
+      "guid": "3a74c9c2cb0659544bbf9505e46f9f57",
+      "localFileId": 1035871451,
+      "path": "Assets/Mods/TomLightingProbes/Runtime/TomProbe.Runtime.dll",
+      "type": "TomProbeRuntime.TomProbeCaptureScheduler"
+    },
+    {
+      "assembly": "TomProbe.Runtime",
+      "guid": "3a74c9c2cb0659544bbf9505e46f9f57",
+      "localFileId": -1476777764,
+      "path": "Assets/Mods/TomLightingProbes/Runtime/TomProbe.Runtime.dll",
+      "type": "TomProbeRuntime.TomProbeControl"
+    },
+    {
+      "assembly": "TomProbe.Runtime",
+      "guid": "3a74c9c2cb0659544bbf9505e46f9f57",
+      "localFileId": 791094605,
+      "path": "Assets/Mods/TomLightingProbes/Runtime/TomProbe.Runtime.dll",
+      "type": "TomProbeRuntime.TomProbeManager"
+    },
+    {
+      "assembly": "TomProbe.Runtime",
+      "guid": "3a74c9c2cb0659544bbf9505e46f9f57",
+      "localFileId": -2009144964,
+      "path": "Assets/Mods/TomLightingProbes/Runtime/TomProbe.Runtime.dll",
+      "type": "TomProbeRuntime.TomSHProbeVolume"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+<Project>
+  <Import Project="$(MSBuildThisFileDirectory)../Directory.Build.props" />
+  <PropertyGroup>
+    <ImportDirectoryBuildProps>false</ImportDirectoryBuildProps>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkProfile />
+    <OutputPath>$(BaseOutputPath)$(Configuration)/</OutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)/</IntermediateOutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <LegacyCsc>$(WINDIR)/Microsoft.NET/Framework64/v4.0.30319/csc.exe</LegacyCsc>
+    <LegacyManaged>$(GameRoot)/KoikatsuSunshine_Data/Managed</LegacyManaged>
+  </PropertyGroup>
+  <ItemGroup>
+    <LegacyReference Include="$(GameRoot)/BepInEx/core/BepInEx.dll" />
+    <LegacyReference Include="$(LegacyManaged)/UnityEngine*.dll" />
+    <LegacyReference Include="$(LegacyManaged)/netstandard.dll" />
+    <Reference Include="@(LegacyReference)"><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>

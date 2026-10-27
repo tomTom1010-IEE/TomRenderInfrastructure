@@ -1,0 +1,32 @@
+{
+  "schema": 2,
+  "name": "TomRenderInfrastructure",
+  "status": "runtime-integration-in-development-not-for-deployment",
+  "target": "KKS / Unity 2019.4 Built-in / Windows",
+  "profiles": {
+    "current": ["Core", "Probe", "BSDF", "TomHairFeather", "TomSkinSDF", "TomTessellation"],
+    "with-prototypes": ["Core", "Probe", "BSDF", "TomHairFeather", "TomSkinSDF", "TomTessellation", "SceneEffects"]
+  },
+  "assemblies": [
+    {"module":"Core", "name":"TomRender.Core", "project":"src/Core/TomRender.Core/TomRender.Core.csproj", "install":"BepInEx/plugins/TomRenderInfrastructure/TomRender.Core.dll", "compiler":"sdk"},
+    {"module":"Probe", "name":"TomProbe.Runtime", "project":"src/Probe/TomProbe.Runtime/TomProbe.Runtime.csproj", "install":"BepInEx/plugins/TomProbe/TomProbe.Runtime.dll", "compiler":"sdk"},
+    {"module":"Probe", "name":"KKS_TomProbe", "project":"src/Probe/KKS_TomProbe/KKS_TomProbe.csproj", "install":"BepInEx/plugins/TomProbe/KKS_TomProbe.dll", "compiler":"sdk", "plugin":{"guid":"com.tomtom1010.kkshadersplus.probes", "name":"Tom Probe Runtime", "version":"0.2.2"}},
+    {"module":"BSDF", "name":"TomBSDF.Runtime", "project":"src/BSDF/TomBSDF.Runtime/TomBSDF.Runtime.csproj", "install":"BepInEx/plugins/TomBSDF/TomBSDF.Runtime.dll", "compiler":"sdk"},
+    {"module":"BSDF", "name":"KKS_TomBSDF", "project":"src/BSDF/KKS_TomBSDF/KKS_TomBSDF.csproj", "install":"BepInEx/plugins/TomBSDF/KKS_TomBSDF.dll", "compiler":"sdk", "plugin":{"guid":"com.tomtom1010.tombsdf.scene", "name":"TomBSDF KKS Scene Companion", "version":"0.6.0"}},
+    {"module":"TomHairFeather", "name":"TomHairFeather", "project":"src/TomX/TomHairFeather/TomHairFeather.csproj", "install":"BepInEx/plugins/TomHairFeather/TomHairFeather.dll", "compiler":"legacyX", "plugin":{"guid":"tom.shaders.x.hairfeather", "name":"Tom HairX Feather (Experimental)", "version":"0.3.0"}},
+    {"module":"TomSkinSDF", "name":"TomSkinSDF", "project":"src/TomX/TomSkinSDF/TomSkinSDF.csproj", "install":"BepInEx/plugins/TomShadersX/TomSkinSDF.dll", "compiler":"legacyX", "plugin":{"guid":"tom.shaders.x.facesdf", "name":"Tom SkinX Face SDF", "version":"0.1.1"}},
+    {"module":"TomTessellation", "name":"TomTessellation", "project":"src/TomX/TomTessellation/TomTessellation.csproj", "install":"BepInEx/plugins/TomShadersX/TomTessellation.dll", "compiler":"legacyX", "plugin":{"guid":"tom.shaders.x.tessbounds", "name":"Tom X Tessellation Bounds", "version":"0.1.1"}},
+    {"module":"SceneEffects", "name":"TomSceneEffects.Runtime", "project":"src/SceneEffects/TomSceneEffects.Runtime/TomSceneEffects.Runtime.csproj", "install":"BepInEx/plugins/TomSceneEffects/TomSceneEffects.Runtime.dll", "compiler":"sdk"},
+    {"module":"SceneEffects", "name":"KKS_TomSceneEffects", "project":"src/SceneEffects/KKS_TomSceneEffects/KKS_TomSceneEffects.csproj", "install":"BepInEx/plugins/TomSceneEffects/KKS_TomSceneEffects.dll", "compiler":"sdk", "plugin":{"guid":"com.tomtom1010.sceneeffects", "name":"Tom Shared Scene Effects (DOF prototype)", "version":"0.1.0"}}
+  ],
+  "dependencies": [
+    {"module":"Core", "required":["Unity 2019.4 / .NET Framework 4.6.2"], "resources":[], "fallback":"Shared required assembly for migrated helpers, no BepInEx entry or automatic GPU work. Do not install migrated BSDF/SceneEffects without this DLL."},
+    {"module":"Probe", "required":["BepInEx 5 / Harmony", "TomRender.Core.dll", "TomProbe.Runtime.dll paired with KKS_TomProbe.dll"], "resources":["Tom Lighting Probes zipmod: studio/tom/tom_lighting_probes.unity3d"], "fallback":"Without the DLL pair, custom probe authoring controls and SH updates are unavailable; ordinary Unity probes and shader fallback remain external responsibilities."},
+    {"module":"BSDF", "required":["BepInEx 5", "TomRender.Core.dll", "TomBSDF.Runtime.dll paired with KKS_TomBSDF.dll"], "resources":["Matching TomBSDF zipmod and its resource assets"], "optional":["Tom Lighting Probes", "Screenshot manager"], "fallback":"Shader base rendering does not require the companion. Extension resources are version-checked and disabled when unavailable; no new shadow maps are generated."},
+    {"module":"TomHairFeather", "required":["BepInEx 5", "TomRender.Core.dll"], "resources":["hairx-feather.unity3d beside TomHairFeather.dll; matching TomX hair materials"], "fallback":"Missing helper resource disables the feather extension. This module is experimental, not a universal transparency solution."},
+    {"module":"TomSkinSDF", "required":["BepInEx 5", "TomRender.Core.dll"], "resources":["Matching TomX skin materials / SDF inputs"], "fallback":"No new resource Bundle is required by the DLL; face-SDF shader fallback remains in TomX."},
+    {"module":"TomTessellation", "required":["BepInEx 5", "TomRender.Core.dll"], "resources":["Matching TomX tessellation materials"], "fallback":"Geometry remains shader-owned; the automatic bounds extension is unavailable without this helper."},
+    {"module":"SceneEffects", "required":["BepInEx 5 / Harmony", "TomRender.Core.dll", "KKSAPI (marco.kkapi)", "ExtensibleSaveFormat", "TomSceneEffects.Runtime.dll paired with KKS_TomSceneEffects.dll"], "resources":["Studio native DepthOfField effect; original effect shader resources"], "optional":["KKS_TomBSDF (soft BepInEx dependency)", "StudioMCP (test client only)"], "fallback":"Default Native / scene Inherit. BeforeTransparents is explicit and affects ALL transparent geometry. Guarded native adapter failures restore native scheduling; scene-color routing uses Core protocol 1, not BSDF private IL.", "status":"prototype-local-only"}
+  ],
+  "excluded": ["HeadBand (retired)", "LinearBuildBridge (historical build tooling)", "StudioMCP (independent optional client)", "Shaders / Bundles / Unity serialized assets", "Game SDK and third-party loader DLLs", "KK adaptation"]
+}

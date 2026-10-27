@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest schema-ver="1">
+  <guid>tom.lightingprobes</guid>
+  <name>Tom Lighting Probes</name>
+  <version>0.2.2</version>
+  <author>tomTom</author>
+  <description>ME-controlled world-aligned reflection and SH probes with a shared capture queue for KKS Studio.</description>
+  <website>https://github.com/tomTom1010-IEE/KKShadersPlus</website>
+  <game>Koikatsu Sunshine</game>
+  <MaterialEditor>
+    <TooltipCatalog AssetBundle="studio/tom/tom_lighting_probes.unity3d" Asset="tom_probe_tooltips" />
+    <Shader Name="tom/ReflectionProbeControl" AssetBundle="studio/tom/tom_lighting_probes.unity3d" Asset="a_TomReflectionProbe512">
+      <Property Name="ProbeEnabled" Category="Probe" Type="Float" Range="0, 1" />
+      <Property Name="ProbeIntensity" Category="Probe" Type="Float" Range="0, 8" />
+      <Property Name="ProbePriority" Category="Probe" Type="Float" Range="0, 100" />
+      <Property Name="ProbeGroup" Category="Updates" Type="Float" Range="0, 999" />
+      <Property Name="ProbeRefreshScope" Category="Updates" Type="Float" Range="0, 2" />
+      <Property Name="ProbeRefresh" Category="Updates" Type="Float" Range="0, 1" />
+      <Property Name="ProbeUpdateMode" Category="Updates" Type="Float" Range="0, 3" />
+      <Property Name="ProbeCaptureOnLoad" Category="Updates" Type="Float" Range="0, 1" />
+      <Property Name="ProbeInterval" Category="Updates" Type="Float" Range="0.5, 3600" />
+      <Property Name="ProbeNearClip" Category="Capture" Type="Float" Range="0.01, 100" />
+      <Property Name="ProbeFarClip" Category="Capture" Type="Float" Range="0.02, 2000" />
+      <Property Name="ProbeShadowDistance" Category="Capture" Type="Float" Range="0, 500" />
+      <Property Name="ProbeCapturePreset" Category="Capture" Type="Float" Range="0, 2" />
+      <Property Name="ProbeMaskLow" Category="Capture" Type="Float" Range="0, 65535" />
+      <Property Name="ProbeMaskHigh" Category="Capture" Type="Float" Range="0, 65535" />
+      <Property Name="ProbeSkybox" Category="Capture" Type="Float" Range="0, 1" />
+      <Property Name="ProbeBackground" Category="Capture" Type="Color" />
+      <Property Name="ProbeSizeX" Category="World Bounds" Type="Float" Range="0.01, 1000" />
+      <Property Name="ProbeSizeY" Category="World Bounds" Type="Float" Range="0.01, 1000" />
+      <Property Name="ProbeSizeZ" Category="World Bounds" Type="Float" Range="0.01, 1000" />
+      <Property Name="ProbeOffsetX" Category="World Bounds" Type="Float" Range="-1000, 1000" />
+      <Property Name="ProbeOffsetY" Category="World Bounds" Type="Float" Range="-1000, 1000" />
+      <Property Name="ProbeOffsetZ" Category="World Bounds" Type="Float" Range="-1000, 1000" />
+      <Property Name="ProbeQuality" Category="Reflection" Type="Float" Range="0, 2" />
+      <Property Name="ProbeHDR" Category="Reflection" Type="Float" Range="0, 1" />
+      <Property Name="ProbeBoxProjection" Category="Reflection" Type="Float" Range="0, 1" />
+      <Property Name="ProbeBlendDistance" Category="Reflection" Type="Float" Range="0, 100" />
+      <Property Name="ProbeTimeSlicing" Category="Reflection" Type="Float" Range="0, 2" />
+    </Shader>
+    <Shader Name="tom/SHVolumeControl" AssetBundle="studio/tom/tom_lighting_probes.unity3d" Asset="a_TomSHVolumeStandard">
+      <Property Name="ProbeEnabled" Category="Probe" Type="Float" Range="0, 1" />
+      <Property Name="ProbeIntensity" Category="Probe" Type="Float" Range="0, 8" />
+      <Property Name="ProbePriority" Category="Probe" Type="Float" Range="0, 100" />
+      <Property Name="ProbeGroup" Category="Updates" Type="Float" Range="0, 999" />
+      <Property Name="ProbeRefreshScope" Category="Updates" Type="Float" Range="0, 2" />
+      <Property Name="ProbeRefresh" Category="Updates" Type="Float" Range="0, 1" />
+      <Property Name="ProbeUpdateMode" Category="Updates" Type="Float" Range="0, 3" />
+      <Property Name="ProbeCaptureOnLoad" Category="Updates" Type="Float" Range="0, 1" />
+      <Property Name="ProbeInterval" Category="Updates" Type="Float" Range="5, 3600" />
+      <Property Name="ProbeNearClip" Category="Capture" Type="Float" Range="0.01, 100" />
+      <Property Name="ProbeFarClip" Category="Capture" Type="Float" Range="0.02, 2000" />
+      <Property Name="ProbeShadowDistance" Category="Capture" Type="Float" Range="0, 500" />
+      <Property Name="ProbeCapturePreset" Category="Capture" Type="Float" Range="0, 2" />
+      <Property Name="ProbeMaskLow" Category="Capture" Type="Float" Range="0, 65535" />
+      <Property Name="ProbeMaskHigh" Category="Capture" Type="Float" Range="0, 65535" />
+      <Property Name="ProbeSkybox" Category="Capture" Type="Float" Range="0, 1" />
+      <Property Name="ProbeBackground" Category="Capture" Type="Color" />
+      <Property Name="ProbeSizeX" Category="World Bounds" Type="Float" Range="0.01, 1000" />
+      <Property Name="ProbeSizeY" Category="World Bounds" Type="Float" Range="0.01, 1000" />
+      <Property Name="ProbeSizeZ" Category="World Bounds" Type="Float" Range="0.01, 1000" />
+      <Property Name="ProbeOffsetX" Category="World Bounds" Type="Float" Range="-1000, 1000" />
+      <Property Name="ProbeOffsetY" Category="World Bounds" Type="Float" Range="-1000, 1000" />
+      <Property Name="ProbeOffsetZ" Category="World Bounds" Type="Float" Range="-1000, 1000" />
+      <Property Name="SHGridX" Category="SH" Type="Float" Range="2, 8" />
+      <Property Name="SHGridY" Category="SH" Type="Float" Range="2, 8" />
+      <Property Name="SHGridZ" Category="SH" Type="Float" Range="2, 8" />
+      <Property Name="SHCaptureQuality" Category="SH" Type="Float" Range="0, 3" />
+      <Property Name="SHEdgeFade" Category="SH" Type="Float" Range="0, 0.49" />
+      <Property Name="SHSamplesPerFrame" Category="SH" Type="Float" Range="1, 4" />
+      <Property Name="ProbeOcclusionCulling" Category="Capture" Type="Float" Range="0, 1" />
+    </Shader>
+  </MaterialEditor>
+</manifest>

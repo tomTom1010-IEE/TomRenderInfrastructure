@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "scope": "Original scheduling baseline. DOF fixture is a marked blur surrogate, not native Studio DOF.",
+  "modules": [
+    {
+      "module": "BSDF",
+      "callbacks": [
+        "Camera.onPreCull",
+        "Camera.onPreRender",
+        "Camera.onPostRender"
+      ],
+      "bufferStage": "BeforeForwardAlpha",
+      "shadowStages": [
+        "AfterShadowMap",
+        "BeforeScreenspaceMask"
+      ]
+    },
+    {
+      "module": "Feather",
+      "callbacks": [
+        "component.OnPreCull"
+      ],
+      "gpuStages": [
+        "BeforeForwardOpaque",
+        "AfterEverything"
+      ],
+      "partialRect": "Immediate private field before native setup, then publish only"
+    },
+    {
+      "module": "ProbeSky",
+      "callbacks": [
+        "Camera.onPreCull",
+        "Camera.onPreRender",
+        "Camera.onPostRender"
+      ],
+      "ownership": "Explicit capture camera or guarded native reflection job; reject coincident owners"
+    },
+    {
+      "module": "DOF",
+      "callbacks": [
+        "Camera.onPreCull"
+      ],
+      "early": "ImageEffectOpaque relay",
+      "late": "One native passthrough only after successful early execution",
+      "default": "Native / scene Inherit"
+    }
+  ],
+  "nativeDofOrder": [
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Opaque fog marker",
+    "Native late DOF",
+    "Final post effects"
+  ],
+  "earlyDofOrder": [
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Transparent cull callback (not GPU draw order)",
+    "Opaque fog marker",
+    "DOF opaque relay",
+    "Native late passthrough",
+    "Final post effects"
+  ]
+}

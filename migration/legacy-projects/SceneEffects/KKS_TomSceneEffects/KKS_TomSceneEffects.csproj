@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyName>KKS_TomSceneEffects</AssemblyName>
+    <LangVersion>7.3</LangVersion>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GameRoot Condition="'$(GameRoot)' == ''">D:\Program Files\KoikatuSunshine</GameRoot>
+    <ManagedDir>$(GameRoot)/CharaStudio_Data/Managed</ManagedDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../TomSceneEffects.Runtime/TomSceneEffects.Runtime.csproj" />
+    <Reference Include="BepInEx" HintPath="$(GameRoot)/BepInEx/core/BepInEx.dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(GameRoot)/BepInEx/core/0Harmony.dll" Private="false" />
+    <Reference Include="UnityEngine" HintPath="$(ManagedDir)/UnityEngine.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(ManagedDir)/UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="UnityEngine.JSONSerializeModule" HintPath="$(ManagedDir)/UnityEngine.JSONSerializeModule.dll" Private="false" />
+    <Reference Include="Assembly-CSharp" HintPath="$(ManagedDir)/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="Assembly-CSharp-firstpass" HintPath="$(ManagedDir)/Assembly-CSharp-firstpass.dll" Private="false" />
+    <Reference Include="KKSAPI" HintPath="$(GameRoot)/BepInEx/plugins/KKSAPI.dll" Private="false" />
+    <Reference Include="ExtensibleSaveFormat" HintPath="$(GameRoot)/BepInEx/plugins/KKS_BepisPlugins/KKS_ExtensibleSaveFormat.dll" Private="false" />
+  </ItemGroup>
+</Project>

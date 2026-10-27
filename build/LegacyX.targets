@@ -1,0 +1,9 @@
+<Project>
+  <Target Name="CoreCompile">
+    <ItemGroup><LegacyReference Include="@(ReferencePath)" Condition="'%(ReferencePath.Filename)' == 'TomRender.Core'" /></ItemGroup>
+    <Error Condition="!Exists('$(LegacyCsc)')" Text="The preserved Windows Framework csc.exe is required for TomX; no silent Roslyn substitution." />
+    <Error Condition="!Exists('%(LegacyReference.Identity)')" Text="Missing KKS reference %(LegacyReference.Identity)" />
+    <MakeDir Directories="$(IntermediateOutputPath)" />
+    <Exec Command="&quot;$(LegacyCsc)&quot; /nologo /target:library /optimize+ /define:TOM_X_BEPINEX /out:&quot;$(IntermediateOutputPath)$(AssemblyName).dll&quot; @(LegacyReference->'/reference:&quot;%(FullPath)&quot;', ' ') @(RuntimeSource->'&quot;%(FullPath)&quot;', ' ')" />
+  </Target>
+</Project>
