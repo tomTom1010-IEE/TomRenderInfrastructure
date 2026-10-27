@@ -131,7 +131,8 @@ def main():
               'shaderBuildPerformed':False,'runtimeRebuilt':False,'shaderBundles':bundles,
               'baseDependency':'TomRenderInfrastructure KKS 0.1.0',
               'correspondingSource':{name:f'https://github.com/tomTom1010-IEE/{name}/tree/{commit}' for name,commit in sources.items()}}
-    licenses = {'LICENSE':REPO/'LICENSE', 'LICENSES/Scope.md':REPO/'LICENSES/Scope.md'}
+    licenses = {'LICENSE':REPO/'LICENSE', 'LICENSES/Scope.md':REPO/'LICENSES/Scope.md',
+                'LICENSES/README.md':REPO/'LICENSES/README.md'}
     licenses.update({f'LICENSES/{p.name}':p for p in (REPO/'LICENSES').glob('*.txt')})
     base = {name:path for name,path in frozen_files.items() if '/TomSceneEffects/' not in name}
     prototype = {name:path for name,path in frozen_files.items() if '/TomSceneEffects/' in name}
@@ -141,6 +142,7 @@ def main():
         files.update(licenses)
         files['INSTALL.md'] = REPO/'INSTALL.md'
         files['CHANGELOG.md'] = REPO/'CHANGELOG.md'
+        files['docs/Live-Regression.md'] = REPO/'docs/Live-Regression.md'
     authoring = dict(licenses)
     for item in read(args.authoring_export/'SOURCE-INVENTORY.json')['files']:
         path = args.authoring_export/item['path']
@@ -165,9 +167,17 @@ def main():
             files['INSTALL.md'] = (f'# TomX {version} Infra1\n\nInstall [TomRenderInfrastructure 0.1.0](https://github.com/tomTom1010-IEE/TomRenderInfrastructure/releases/tag/v0.1.0) first. Then merge only mods into the KKS game root. This shader archive contains no DLLs or Probe/helper Bundles. Keep the neutral Skin textures for explicit ME import into genuinely empty slots; do not replace existing game maps.\n').encode('utf-8')
         else:
             for relative in ['Assets/Mods/TomShadersBSDF/LICENSE','Assets/Mods/TomShadersBSDF/ThirdParty/LTC-LICENSE.txt',
-                             'Assets/Mods/TomShadersBSDF/Documents/Installation.md','docs/TomBSDF-UserManual.en.md']:
+                             'docs/TomBSDF-UserManual.en.md']:
                 files[relative] = root/relative
-            files['INSTALL.md'] = root/'Assets/Mods/TomShadersBSDF/Documents/Installation.md'
+            files['INSTALL.md'] = (
+                '# TomBSDF 0.2.0 RC1 Infra1\n\n'
+                'Install [TomRenderInfrastructure KKS 0.1.0](https://github.com/tomTom1010-IEE/TomRenderInfrastructure/releases/tag/v0.1.0) first. '
+                'Close KKS/Studio, back up old files outside active folders, then merge only this archive\'s mods folder into the game root. '
+                'This shader pack contains no runtime DLLs or Probe resources; keep one shared base and remove old duplicate providers. '
+                'Do not unpack zipmods over abdata or install authoring materials/prefabs as game files.\n\n'
+                '[Offline manual](docs/TomBSDF-UserManual.en.md) | '
+                '[Full installation guide](https://github.com/tomTom1010-IEE/TomBSDF/blob/main/Assets/Mods/TomShadersBSDF/Documents/Installation.md)\n'
+            ).encode('utf-8')
         filename = ('TomShadersX-KKS-0.4.0-Infra1.zip' if name == 'TomshadersX' else 'TomBSDF-KKS-0.2.0-RC1-Infra1.zip')
         receipts.append({'project':name,**package(args.output/name/filename,files,{**common,'kind':'shader-pack-no-helpers','version':version,'tag':tag},True)})
         target = args.output/name/zip_name
