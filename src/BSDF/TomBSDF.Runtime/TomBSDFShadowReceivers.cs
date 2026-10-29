@@ -72,10 +72,13 @@ namespace TomBSDFRuntime
         readonly Dictionary<int, CameraResources> cameras = new Dictionary<int, CameraResources>();
         readonly Dictionary<int, Hook> hooks = new Dictionary<int, Hook>();
         readonly List<Scope> stack = new List<Scope>();
+        readonly List<Scope> scopePool = new List<Scope>();
         readonly List<Light> lights = new List<Light>();
         readonly List<Material> materials = new List<Material>();
         readonly List<Renderer> optOuts = new List<Renderer>();
         readonly List<int> dead = new List<int>();
+        readonly Plane[] planes = new Plane[6];
+        readonly RendererInterest targets = SceneDiscovery.WatchShaders("BSDF alpha shadow receivers", IsReceiver);
         TomBSDFShadowResources resources;
         Material copy;
         int sequence;
@@ -101,14 +104,18 @@ namespace TomBSDFRuntime
         }
         static bool IsReceiver(Material m)
         {
-            return m && m.shader && (m.shader.name == "tom/BSDFAlpha" || m.shader.name == "tom/BSDFAlphaBackFront" || m.shader.name == "tom/BSDFGlass");
+            if (!m) return false;
+            string name = SceneDiscovery.ShaderName(m.shader);
+            return name == "tom/BSDFAlpha" || name == "tom/BSDFAlphaBackFront" || name == "tom/BSDFGlass";
         }
         int Demand(Camera camera)
         {
             int layers = 0; optOuts.Clear();
-            var planes = GeometryUtility.CalculateFrustumPlanes(camera);
-            foreach (var r in SceneDiscovery.Renderers())
+            if (!targets.Affects(camera)) return 0;
+            GeometryUtility.CalculateFrustumPlanes(camera, planes);
+            for (int index = 0; index < targets.Count; index++)
             {
+                var r = targets[index];
                 if (!r || !r.enabled || !r.gameObject.activeInHierarchy || (camera.cullingMask & (1 << r.gameObject.layer)) == 0
                     || !GeometryUtility.TestPlanesAABB(planes, r.bounds)) continue;
                 materials.Clear(); r.GetSharedMaterials(materials);
@@ -144,8 +151,11 @@ namespace TomBSDFRuntime
         {
             if (!camera) return;
             if (stack.Count >= 8) { Abort(); return; }
-            var scope = new Scope { camera = camera, previousParams = Shader.GetGlobalVector(Params), previousMetadata = Shader.GetGlobalTexture(Metadata),
-                previousCapture = Shader.GetGlobalVector(CaptureScope), capture = new Vector4(0, 0, 1, (int)QualitySettings.shadowProjection) };
+            if (scopePool.Count <= stack.Count) scopePool.Add(new Scope());
+            var scope = scopePool[stack.Count];
+            scope.camera = camera; scope.resources = null; scope.optOuts.Clear();
+            scope.previousParams = Shader.GetGlobalVector(Params); scope.previousMetadata = Shader.GetGlobalTexture(Metadata);
+            scope.previousCapture = Shader.GetGlobalVector(CaptureScope); scope.capture = new Vector4(0, 0, 1, (int)QualitySettings.shadowProjection);
             for (int i = 0; i < MaxLights; i++) scope.previousMaps[i] = Shader.GetGlobalTexture(Maps[i]);
             stack.Add(scope); ClearGlobals();
             Shader.SetGlobalVector(CaptureScope, scope.capture);
@@ -353,9 +363,12 @@ namespace TomBSDFRuntime
             {
                 scope.optOuts[i].Dispose();
             }
+            scope.optOuts.Clear();
             Shader.SetGlobalVector(Params, scope.previousParams); Shader.SetGlobalTexture(Metadata, scope.previousMetadata);
             Shader.SetGlobalVector(CaptureScope, scope.previousCapture);
             for (int i = 0; i < MaxLights; i++) Shader.SetGlobalTexture(Maps[i], scope.previousMaps[i]);
+            scope.camera = null; scope.resources = null; scope.previousMetadata = null;
+            Array.Clear(scope.previousMaps, 0, scope.previousMaps.Length);
             if (!HasActiveResources()) foreach (var hook in hooks.Values) hook.Detach();
         }
         public static void ClearGlobals() { Shader.SetGlobalVector(Params, Vector4.zero); }
@@ -365,6 +378,7 @@ namespace TomBSDFRuntime
             Abort(); foreach (var c in cameras.Values) c.Dispose(); cameras.Clear();
             foreach (var hook in hooks.Values) hook.Dispose(); hooks.Clear();
             if (copy) Destroy(copy); copy = null;
+            targets.Dispose(); scopePool.Clear();
         }
         static void Destroy(Object value) { if (Application.isPlaying) Object.Destroy(value); else Object.DestroyImmediate(value); }
     }

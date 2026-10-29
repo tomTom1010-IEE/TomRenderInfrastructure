@@ -26,9 +26,11 @@ namespace TomShadersX
         Shader fieldShader;
         float nextScan;
         string lastDiagnostic;
+        RendererInterest targets;
 
         void Awake()
         {
+            targets = SceneDiscovery.WatchShaders("TomX feather hair/eye", IsCandidate);
             enabledFeature = Config.Bind("Feather", "Enabled", true,
                 "Experimental inward HairX feather for known xukmi and TomX eye stencil writers. Disabled releases camera GPU work.");
             diagnosticLogging = Config.Bind("Diagnostics", "LogStateChanges", true,
@@ -69,15 +71,18 @@ namespace TomShadersX
             var receivers = new List<Renderer>();
             var sources = new List<TomHairFeatherCamera.Source>();
             var discovery = new List<string>();
-            foreach (Renderer renderer in SceneDiscovery.Renderers())
+            SceneDiscovery.RefreshKnown();
+            for (int index = 0; index < targets.Count; index++)
             {
-                if (!renderer.enabled || !renderer.gameObject.activeInHierarchy) continue;
+                var renderer = targets[index];
+                if (!renderer || !renderer.enabled || !renderer.gameObject.activeInHierarchy) continue;
                 materials.Clear(); renderer.GetSharedMaterials(materials);
                 for (int n = 0; n < materials.Count; n++)
                 {
                     Material material = materials[n];
                     if (!material || !material.shader) continue;
-                    if (material.shader.name == "tom/HairX")
+                    string shaderName = SceneDiscovery.ShaderName(material.shader);
+                    if (shaderName == "tom/HairX")
                     {
                         if (!receivers.Contains(renderer)) receivers.Add(renderer);
                         if (diagnosticLogging.Value) discovery.Add("Hair " + renderer.name + " / " + material.name
@@ -86,9 +91,9 @@ namespace TomShadersX
                             + ", widthMode=" + (material.HasProperty("_HairFeatherWidthMode") ? material.GetFloat("_HairFeatherWidthMode") : 0)
                             + ", worldWidth=" + (material.HasProperty("_HairFeatherWorldWidth") ? material.GetFloat("_HairFeatherWorldWidth") : 0));
                     }
-                    else if (writers.Contains(material.shader.name))
+                    else if (writers.Contains(shaderName))
                     {
-                        bool tomEye = material.shader.name == "tom/EyeWX" || material.shader.name == "tom/EyeX";
+                        bool tomEye = shaderName == "tom/EyeWX" || shaderName == "tom/EyeX";
                         // Missing X mask passes stay missing so the camera takes its explicit hard fallback.
                         string pass = tomEye || material.FindPass("StencilMask") >= 0 ? "StencilMask" : "Forward";
                         sources.Add(new TomHairFeatherCamera.Source { renderer = renderer, materialIndex = n,
@@ -155,12 +160,19 @@ namespace TomShadersX
             Logger.LogInfo("[HairFeather] " + message);
         }
 
+        bool IsCandidate(Material material)
+        {
+            if (!material) return false;
+            string name = SceneDiscovery.ShaderName(material.shader);
+            return name == "tom/HairX" || writers.Contains(name);
+        }
+
         void Clear()
         {
             foreach (var entry in cameras) if (entry.Value) { entry.Value.enabled = false; Destroy(entry.Value); }
             cameras.Clear();
         }
-        void OnDestroy() { Clear(); if (bundle) bundle.Unload(false); }
+        void OnDestroy() { Clear(); if (targets != null) { targets.Dispose(); targets = null; } if (bundle) bundle.Unload(false); }
     }
 }
 #endif

@@ -13,6 +13,8 @@ namespace TomShadersX
         readonly List<Material> materials = new List<Material>();
         readonly List<Renderer> stale = new List<Renderer>();
         float nextScan;
+        RendererInterest targets;
+        void Awake() { targets = SceneDiscovery.WatchShaders("TomX Tess bounds", TomTessellationBounds.IsTessellationMaterial); }
 
         bool Needed(Renderer renderer)
         {
@@ -26,9 +28,11 @@ namespace TomShadersX
         {
             if (Time.unscaledTime < nextScan) return;
             nextScan = Time.unscaledTime + 1;
-            foreach (var renderer in SceneDiscovery.Renderers())
+            SceneDiscovery.RefreshKnown();
+            for (int index = 0; index < targets.Count; index++)
             {
-                if (!renderer.enabled || !renderer.gameObject.activeInHierarchy || !Needed(renderer)
+                var renderer = targets[index];
+                if (!renderer || !renderer.enabled || !renderer.gameObject.activeInHierarchy || !Needed(renderer)
                     || tracked.ContainsKey(renderer) || renderer.GetComponent<TomTessellationBounds>()) continue;
                 if (!(renderer is SkinnedMeshRenderer) && !renderer.GetComponent<MeshFilter>()) continue;
                 tracked.Add(renderer, renderer.gameObject.AddComponent<TomTessellationBounds>());
@@ -49,7 +53,7 @@ namespace TomShadersX
                 if (helper) { helper.enabled = false; Destroy(helper); }
             tracked.Clear();
         }
-        void OnDestroy() { OnDisable(); }
+        void OnDestroy() { OnDisable(); if (targets != null) { targets.Dispose(); targets = null; } }
     }
 }
 #endif

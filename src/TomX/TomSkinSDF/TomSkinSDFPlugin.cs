@@ -13,14 +13,24 @@ namespace TomShadersX
         readonly List<Material> materials = new List<Material>();
         readonly List<Renderer> stale = new List<Renderer>();
         float nextScan;
+        RendererInterest targets;
+        void Awake() { targets = SceneDiscovery.WatchShaders("TomX face SDF", IsSkin); }
+        static bool IsSkin(Material material)
+        {
+            if (!material) return false;
+            string name = SceneDiscovery.ShaderName(material.shader);
+            return name == "tom/SkinX" || name == "tom/SkinXTess";
+        }
 
         void Update()
         {
             if (Time.unscaledTime < nextScan) return;
             nextScan = Time.unscaledTime + 1f;
-            foreach (var renderer in SceneDiscovery.Renderers())
+            SceneDiscovery.RefreshKnown();
+            for (int index = 0; index < targets.Count; index++)
             {
-                if (!renderer.enabled || !renderer.gameObject.activeInHierarchy) continue;
+                var renderer = targets[index];
+                if (!renderer || !renderer.enabled || !renderer.gameObject.activeInHierarchy) continue;
                 materials.Clear(); renderer.GetSharedMaterials(materials);
                 bool needed = false;
                 foreach (var material in materials) needed |= TomSkinSDFHead.UsesTrackedSDF(material);
@@ -54,6 +64,7 @@ namespace TomShadersX
             foreach (var helper in tracked.Values)
                 if (helper) { helper.enabled = false; Destroy(helper); }
             tracked.Clear();
+            if (targets != null) { targets.Dispose(); targets = null; }
         }
     }
 }

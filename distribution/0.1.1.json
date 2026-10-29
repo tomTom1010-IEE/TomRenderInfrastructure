@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "version": "0.1.1",
+  "date": "2026-10-29",
+  "runtimeSourceFingerprint": "5b71abdecb733a5bccd411e011633d0e8c0325b25f7a404642c1a8e3dd369a2c",
+  "qualification": {
+    "freezeSha256": "fd89a7b8cafbde74e0f9d51579a7ef06aad51608447049037569022ab3d8f567",
+    "acceptanceSha256": "bd7b58e6b65d5fab87945524ffba66f76163aee46a066764ba4541b7c449cca9",
+    "evidenceAuditSha256": "54da0803c9627e8abbbebdc3742df5bb012d2d18879b67b628cd89722f43d43a",
+    "cleanupAuditSha256": "b36be80e31333988400d9a5a257ee64ad3f3869bd7e55a3ad09269f736d1ab1c",
+    "editorChecks": 170,
+    "managedCoordinatorChecks": 49,
+    "toolingChecks": 80,
+    "liveChecks": 26,
+    "pixelComparisons": 9
+  },
+  "payload": [
+    {"kind":"dll", "path":"BepInEx/plugins/TomRenderInfrastructure/TomRender.Core.dll", "sha256":"1eebebfdf78c46d4b39e635f17c19de1eca0d77c848e0ca965d2ab29b1b165b3"},
+    {"kind":"dll", "path":"BepInEx/plugins/TomProbe/TomProbe.Runtime.dll", "sha256":"3bf18971aa0827c0721c717b67e842822046df312c1a6876aeb7c5d5f6ff6dac"},
+    {"kind":"dll", "path":"BepInEx/plugins/TomProbe/KKS_TomProbe.dll", "sha256":"9fb30106bc3ccf20f974c64240292e202e903ece8a485b8569a16299d92ddb6f"},
+    {"kind":"dll", "path":"BepInEx/plugins/TomBSDF/TomBSDF.Runtime.dll", "sha256":"80c53070f2fd04003da96e0e36986b34be0f4d3b987168771408b9d0fb2b72da"},
+    {"kind":"dll", "path":"BepInEx/plugins/TomBSDF/KKS_TomBSDF.dll", "sha256":"ac1aca32da3fb9f7a15ae7fb9fb1b913060b9e4b79eed8049963744954b57506"},
+    {"kind":"dll", "path":"BepInEx/plugins/TomHairFeather/TomHairFeather.dll", "sha256":"18459ca5ac6e2e709ea818808b13649305c5745a1d28e6f34ec16772316ec5cc"},
+    {"kind":"dll", "path":"BepInEx/plugins/TomShadersX/TomSkinSDF.dll", "sha256":"97b7e387b0b9e30422a949d0dc76f7b96c00e1d5b2d002f71ec2af4521a146b7"},
+    {"kind":"dll", "path":"BepInEx/plugins/TomShadersX/TomTessellation.dll", "sha256":"8b2edfff17dedcd68d238d78620a8d07b8bde9559e06440bcb839100ff8659a7"},
+    {"kind":"dll", "path":"BepInEx/plugins/TomSceneEffects/TomSceneEffects.Runtime.dll", "sha256":"b2f89ab3fc57ae9fa7df6b9c347368508fc180c709ce2d041f7d5c55fe13cff9"},
+    {"kind":"dll", "path":"BepInEx/plugins/TomSceneEffects/KKS_TomSceneEffects.dll", "sha256":"ec297fa32b2a8313fa35272b76f76edea9ca729c9f099ff581825785efb371a4"},
+    {"kind":"unchanged helper Bundle", "path":"BepInEx/plugins/TomHairFeather/hairx-feather.unity3d", "sha256":"9d9614725aa85a0d9ac985666a9645a6a83c1171f9bfcdfccddad8755a79fb19"},
+    {"kind":"unchanged Probe zipmod", "path":"mods/[tomTom][KKS] Tom Lighting Probes v0.2.2.zipmod", "sha256":"6bb1296b6f0c064f3d906361c37b177b1c9c1492c457e0987beb913a633c43ad"}
+  ],
+  "shaderZipmods": [
+    {"path":"mods/TomBSDF-KKS-0.2.0-RC1.zipmod", "sha256":"c62af78d9151f0b701128a7896065d2cc10dfc631392e9b0dadee6d07bff7153"},
+    {"path":"mods/TomShadersX-KKS-0.4.0.zipmod", "sha256":"8a0d8bde287beda41be4357467e54c953bb51bc0c1d31fdc131884f0b82767d0"}
+  ],
+  "probeBundleSha256": "d904a499082a9864e7055f474f727349160950dab525e40a494188f7fc4d733a",
+  "featherBundleSha256": "9d9614725aa85a0d9ac985666a9645a6a83c1171f9bfcdfccddad8755a79fb19",
+  "requiredShaderPacks": {
+    "TomBSDF": "v0.2.0-rc1-infra.1",
+    "TomshadersX": "v0.4.0-infra.1"
+  },
+  "nativePrograms": {
+    "BSDFTotal": 1790,
+    "BSDFModern": 1642,
+    "note": "Existing accepted shader Bundle; neither included nor rebuilt by this update"
+  }
+}

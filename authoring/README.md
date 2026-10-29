@@ -6,7 +6,7 @@ It also preserves Core's authoring DLL metadata. The resource source was exporte
 verbatim through Codex Bridge; no serialized asset was hand-edited.
 
 DLL binaries are excluded from this Git tree. Either use the matching
-`TomRenderInfrastructure-KKS-Authoring-0.1.0.zip` from the release, or build the
+`TomRenderInfrastructure-KKS-Authoring-0.1.1.zip` from the release, or build the
 maintained solution and place the matching outputs at these preserved paths:
 
 ```text
@@ -21,8 +21,10 @@ authoring mirrors remain Assembly-CSharp in TomX; BSDF keeps its own matching
 Runtime authoring binding in its source overlay.
 
 The existing resource Bundle assignment is
-`studio/tom/tom_lighting_probes.unity3d`. The 0.1.0 distribution reuses its
-accepted Bundle; adding this source tree did not trigger a rebuild.
+`studio/tom/tom_lighting_probes.unity3d`. The 0.1.1 distribution reuses its
+accepted Bundle, while the authoring ZIP contains the matching new Core/Probe
+runtime DLLs. Native asset/source/meta bytes retain their original GUIDs;
+the read-only Codex Bridge export did not trigger a Bundle rebuild.
 Feather's helper shader/Bundle source remains in the matching
 [TomX source](https://github.com/tomTom1010-IEE/TomshadersX), not a second maintained
 implementation here. Game/Unity/template SDK assets are external prerequisites.

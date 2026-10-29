@@ -110,11 +110,25 @@ $oldShadow=Get-Content (Join-Path $RepoRoot 'artifacts/phase1/accepted/snapshots
 $newShadow=Get-AssemblySnapshot (Get-OutputPath ($release.assemblies|Where-Object name -eq 'TomBSDF.Runtime'))
 $oldMethods=($oldShadow.modules.types|Where-Object name -eq 'TomBSDFRuntime.TomBSDFShadowReceivers').methods
 $newMethods=($newShadow.modules.types|Where-Object name -eq 'TomBSDFRuntime.TomBSDFShadowReceivers').methods
-foreach($method in 'IsReceiver','Resolution','RebuildHooks','HasActiveResources','Publish') {
+foreach($method in 'Resolution','RebuildHooks','HasActiveResources','Publish') {
     $before=@($oldMethods|Where-Object {$_.name -match "::$method\("})
     $after=@($newMethods|Where-Object {$_.name -match "::$method\("})
     Assert-Check "Native-shadow GPU command/policy body preserved: $method" ($before.Count -eq 1 -and $after.Count -eq 1 -and ($before[0].body|ConvertTo-Json -Depth 60 -Compress) -ceq ($after[0].body|ConvertTo-Json -Depth 60 -Compress))
 }
+$oldReceiver=@($oldMethods|Where-Object {$_.name -match '::IsReceiver\('})[0]
+$newReceiver=@($newMethods|Where-Object {$_.name -match '::IsReceiver\('})[0]
+$oldNames=@($oldReceiver.body.instructions|Where-Object {$_ -match 'ldstr "tom/'}|ForEach-Object {($_ -split 'ldstr ')[1]}|Sort-Object -Unique)
+$newNames=@($newReceiver.body.instructions|Where-Object {$_ -match 'ldstr "tom/'}|ForEach-Object {($_ -split 'ldstr ')[1]}|Sort-Object -Unique)
+Assert-Check 'Cached receiver classification preserves the exact three accepted shader identities' ($oldNames.Count -eq 3 -and ($oldNames -join '|') -ceq ($newNames -join '|') -and ($newReceiver.body.instructions -join "`n") -match 'TomRenderInfrastructure.SceneDiscovery::ShaderName')
+$registry=Get-Content (Join-Path $RepoRoot 'src/Core/TomRender.Core/SceneDiscovery.cs') -Raw
+Assert-Check 'Registry has no global native object search' ($registry -notmatch 'FindObjectsOfType|FindObjectsOfTypeAll')
+Assert-Check 'Background discovery has an explicit time budget and render-scope guard' ($registry.Contains('DefaultBudgetMilliseconds') -and $registry.Contains('Stopwatch.GetTimestamp() < deadline') -and $registry.Contains('Coordinator.ActiveDepth != 0'))
+foreach($file in @('BSDF/TomBSDF.Runtime/TomBSDFTessellationBounds.cs','BSDF/TomBSDF.Runtime/TomBSDFMaterialQuality.cs','BSDF/TomBSDF.Runtime/TomBSDFGlassConsumers.cs','BSDF/TomBSDF.Runtime/TomBSDFShadowReceivers.cs','Probe/TomProbe.Runtime/TomProbeManager.cs','TomX/TomHairFeather/TomHairFeatherPlugin.cs','TomX/TomSkinSDF/TomSkinSDFPlugin.cs','TomX/TomTessellation/TomTessellationPlugin.cs')) {
+    $source=Get-Content (Join-Path $RepoRoot "src/$file") -Raw
+    Assert-Check "Consumer uses a classified interest instead of a complete-scene view: $file" ($source.Contains('WatchShaders(') -and $source -notmatch 'SceneDiscovery\.Renderers\(')
+}
+$probeManager=Get-Content (Join-Path $RepoRoot 'src/Probe/TomProbe.Runtime/TomProbeManager.cs') -Raw
+Assert-Check 'Probe receiver assignment has a no-ready-volume cleanup/exit' ($probeManager.Contains('if (!ready)') -and $probeManager.Contains('_assignments.Clear();') -and $probeManager -notmatch '\.sharedMaterials\b')
 $oldProbe=Get-Content (Join-Path $RepoRoot 'artifacts/phase1/accepted/snapshots/TomProbe.Runtime.current.json') -Raw|ConvertFrom-Json
 $newProbe=Get-AssemblySnapshot (Get-OutputPath ($release.assemblies|Where-Object name -eq 'TomProbe.Runtime'))
 foreach($type in 'TomProbeRuntime.TomSHProbeVolume','TomProbeRuntime.TomReflectionProbeController') {

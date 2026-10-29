@@ -1,6 +1,6 @@
 # KKS Installation And Upgrade
 
-Version **0.1.0**, 28 October 2026. KKS / Unity 2019.4 Built-in Forward / D3D11.
+Version **0.1.1**, 29 October 2026. KKS / Unity 2019.4 Built-in Forward / D3D11.
 This is not a Koikatsu / Unity 5.6 package.
 
 ## Install In This Order
@@ -9,7 +9,7 @@ This is not a Koikatsu / Unity 5.6 package.
    stack installed. These third-party dependencies are not redistributed.
 2. Close KKS and Studio. Back up old Tom DLLs and affected zipmods **outside**
    `BepInEx/plugins` and `mods`; backup subfolders there can still be loaded.
-3. Download `TomRenderInfrastructure-KKS-0.1.0.zip`, extract to a temporary folder
+3. Download `TomRenderInfrastructure-KKS-0.1.1.zip`, extract to a temporary folder
    and merge only its `BepInEx` and `mods` folders into the game root.
 4. Install the separate TomX and/or TomBSDF **Infra1 shader pack** afterwards.
    Those archives contain no helper DLLs. Install the base only once when using both.
@@ -42,10 +42,20 @@ All six BepInEx GUIDs and previous plugin versions remain unchanged. The suite
 version describes the tested cohort, not an increase to every plugin's version.
 Use the release file hashes, not only Windows FileVersion, to distinguish it.
 
+### Upgrading From 0.1.0
+
+Install the complete 0.1.1 base, not only Core or BSDF. If you use the optional
+SceneEffects prototype, update its pair to the matching 0.1.1 archive as well.
+The shared registry replaces per-camera world searches; it does not change
+shader math, configuration names or saved-scene/component identities. Existing
+TomX/BSDF Infra1 shader packs, Probe 0.2.2 resources and the Feather helper Bundle
+remain byte-identical. No Shader/Bundle rebuild or shader-pack reinstall is needed.
+Back up and replace files with the game closed; do not leave old DLL duplicates.
+
 ## Optional DOF Prototype
 
 After the base, optionally merge the `BepInEx` folder from
-`TomRenderInfrastructure-KKS-SceneEffects-Prototype-0.1.0.zip`. It adds
+`TomRenderInfrastructure-KKS-SceneEffects-Prototype-0.1.1.zip`. It adds
 `KKS_TomSceneEffects.dll` and `TomSceneEffects.Runtime.dll` under
 `BepInEx/plugins/TomSceneEffects/`; it does not install a second Core.
 
@@ -91,3 +101,7 @@ overwrite a user scene or delete all configuration as a repair shortcut.
 The [controlled regression](docs/Live-Regression.md) covers actual native DOF,
 glass, Probe/SH, synthetic Feather and persistence. It is not exhaustive GPU,
 whole-character, exporter or third-party-mod certification.
+The [0.1.1 registry qualification](docs/Discovery-Registry.md) adds large-scene
+performance, real ME/Screencap and resource-lifecycle checks. Its rectangle-light
+catalog-load and third-party LightSettings warnings are recorded separately;
+this update does not claim to repair those resource/host issues.

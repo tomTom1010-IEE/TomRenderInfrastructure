@@ -10,6 +10,8 @@
   <ItemGroup>
     <ProjectReference Include="..\TomBSDF.Runtime\TomBSDF.Runtime.csproj" />
     <Reference Include="BepInEx"><HintPath>$(GameRoot)\BepInEx\core\BepInEx.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony" HintPath="$(GameRoot)/BepInEx/core/0Harmony.dll" Private="false" />
+    <Reference Include="Assembly-CSharp" HintPath="$(ManagedDir)/Assembly-CSharp.dll" Private="false" />
     <Reference Include="UnityEngine"><HintPath>$(ManagedDir)\UnityEngine.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="UnityEngine.CoreModule"><HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
   </ItemGroup>

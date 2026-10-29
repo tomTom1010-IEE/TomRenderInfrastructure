@@ -4,16 +4,18 @@ Shared source, build and local staging home for Tom's KKS rendering helpers.
 The source migration preserves existing runtime behavior and identities. It is
 **not a new combined plugin, a shader release, or an installer**.
 
-**Install first:** [KKS 0.1.0 release](https://github.com/tomTom1010-IEE/TomRenderInfrastructure/releases/tag/v0.1.0)
+**Install first:** [KKS 0.1.1 release](https://github.com/tomTom1010-IEE/TomRenderInfrastructure/releases/tag/v0.1.1)
 then install the separate [TomX](https://github.com/tomTom1010-IEE/TomshadersX/releases)
 and/or [TomBSDF](https://github.com/tomTom1010-IEE/TomBSDF/releases) shader packs.
 Shader releases no longer bundle these DLLs. Install this base **once**, not once
 per shader project. See [installation and upgrades](INSTALL.md).
 
-**Status:** four-step local runtime integration accepted on 27 October 2026;
-controlled KKS Studio regression completed on 28 October 2026. The frozen
-cohort passed in one backed-up test environment. Version 0.1.0 publishes those
-exact runtime/resource bytes, not newly compiled shaders or a different runtime.
+**Status:** version 0.1.1 fixes the scene-size-dependent discovery overhead in
+0.1.0. The shared registry, BSDF, Probe and TomX migration passed Editor and
+controlled KKS Studio regression on 29 October 2026. In the supplied large-scene
+test, active-service performance recovered from about 4.52 to 60.21 FPS. These
+are local measurements, not a universal frame-rate guarantee. Existing shader
+packs and resource Bundles are unchanged; no Shader/Bundle rebuild is required.
 See [runtime integration](docs/Runtime-Integration.md),
 [live regression scope](docs/Live-Regression.md) and
 [release preparation](docs/Push-Readiness.md). Broader compatibility/performance
@@ -21,6 +23,12 @@ qualification remains separate. No shader edits, Bundle rebuild or KK adaptation
 occurred in this test. The SceneEffects DOF prototype is a separate opt-in download.
 
 ## Components
+
+**Upgrade from 0.1.0:** replace the complete base DLL cohort and, if installed,
+the matching optional DOF prototype pair. Keep configuration and saved scenes.
+Per-plugin versions and identities stay unchanged; use the suite version and
+checksums to identify this update. See [Discovery Registry](docs/Discovery-Registry.md)
+for measured scope, notification/fallback latency and separately recorded issues.
 
 | Module | Preserved assemblies | Plugin version | Scope |
 | --- | --- | --- | --- |

@@ -59,6 +59,7 @@ namespace TomRenderInfrastructure
                 var go = new GameObject("Tom Render Infrastructure") { hideFlags = HideFlags.HideAndDontSave };
                 if (Application.isPlaying) UnityEngine.Object.DontDestroyOnLoad(go);
                 driver = go.AddComponent<TomRenderDriver>();
+                SceneDiscovery.SetPersistentScene(go.scene);
             }
             catch { Detach(); throw; }
         }
@@ -91,11 +92,16 @@ namespace TomRenderInfrastructure
             coordinator.CollectCameras(value => value is Camera && (Camera)value);
             RenderResourceLease.CollectDeadCameras();
             RendererBoundsBroker.CollectDestroyedRenderers();
+            SceneDiscovery.Pump();
             DetachIfIdle();
+        }
+        internal static void DiscoveryChanged()
+        {
+            if (SceneDiscovery.IsNeeded) Attach(); else DetachIfIdle();
         }
         static void DetachIfIdle()
         {
-            if (coordinator.RegistrationCount != 0 || coordinator.ActiveDepth != 0) return;
+            if (coordinator.RegistrationCount != 0 || coordinator.ActiveDepth != 0 || SceneDiscovery.IsNeeded) return;
             Detach();
             coordinator.CollectCameras(value => false);
             var previous = driver; driver = null;

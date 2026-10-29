@@ -13,12 +13,13 @@ namespace TomBSDFRuntime
         readonly List<Material> materials=new List<Material>();
         readonly List<Renderer> expired=new List<Renderer>();
         readonly List<Camera> active=new List<Camera>();
+        readonly RendererInterest targets=SceneDiscovery.WatchShaders("BSDF Tess bounds",Supports);
         int stamp;
         public int RendererCount { get { return entries.Count; } }
         internal bool OwnsCamera(Camera camera) { return active.Count>0 && active[active.Count-1]==camera; }
         public int UnsupportedStaticRenderers { get; private set; }
         public static bool Supports(Material material)
-        {return material && material.shader && (material.shader.name=="tom/BSDFTess" || material.shader.name=="tom/BSDFCutoutTess");}
+        {if(!material)return false;var name=SceneDiscovery.ShaderName(material.shader);return name=="tom/BSDFTess" || name=="tom/BSDFCutoutTess";}
         public static Vector3 LocalPadding(Transform transform,float worldDepth)
         {
             var m=transform.worldToLocalMatrix;
@@ -26,12 +27,20 @@ namespace TomBSDFRuntime
                 new Vector3(m.m20,m.m21,m.m22).magnitude)*Mathf.Clamp(worldDepth,0,.2f);
         }
         public void Prepare(Camera camera)
-        {if(!camera)return;if(active.Count>=8)Abort();active.Add(camera);Prepare();}
+        {
+            if(!camera)return;if(active.Count>=8)Abort();active.Add(camera);
+            if(targets.Affects(camera))Prepare();
+            else
+            {
+                expired.Clear();foreach(var pair in entries)if(!pair.Key || !targets.Contains(pair.Key))expired.Add(pair.Key);
+                foreach(var renderer in expired){entries[renderer].lease.Dispose();entries.Remove(renderer);}
+            }
+        }
         public void Prepare()
         {
             ++stamp;UnsupportedStaticRenderers=0;
-            foreach(var renderer in SceneDiscovery.Renderers())
-                PrepareRenderer(renderer);
+            SceneDiscovery.RefreshKnown();
+            for(int index=0;index<targets.Count;index++)PrepareRenderer(targets[index]);
             expired.Clear();foreach(var pair in entries)if(!pair.Key || pair.Value.stamp!=stamp)expired.Add(pair.Key);
             foreach(var renderer in expired){entries[renderer].lease.Dispose();entries.Remove(renderer);}
             materials.Clear();
@@ -58,6 +67,6 @@ namespace TomBSDFRuntime
         }
         public void Abort() { active.Clear();foreach(var entry in entries.Values)entry.lease.ResumeSkin(); }
         public void Dispose()
-        {foreach(var entry in entries.Values)entry.lease.Dispose();entries.Clear();materials.Clear();expired.Clear();active.Clear();}
+        {foreach(var entry in entries.Values)entry.lease.Dispose();entries.Clear();materials.Clear();expired.Clear();active.Clear();targets.Dispose();}
     }
 }

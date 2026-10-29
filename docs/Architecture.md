@@ -20,7 +20,7 @@ attribute payloads, actual component types and serialized fields remain checked.
 | RenderCoordinator | Per-invocation IDs, camera generations, nesting, deterministic order, reverse disposal, aborts, bounded traces and fault isolation |
 | UnityCameraHub | One native callback set, transient maintenance driver, no implicit GPU pass |
 | SceneColorRouter | Protocol-1 successful opaque-effect completion, native source by default, current invocation only |
-| SceneDiscovery | Candidates cached only for an invocation; material values, bounds, visibility and MPBs remain live |
+| SceneDiscovery | Shared shader-interest registry, explicit object/ME notifications and budgeted hierarchy discovery outside rendering; only previously relevant identities are refreshed for a matching camera, while material values, bounds, visibility and MPBs remain live |
 | RendererBoundsBroker | One original baseline/mesh clone per renderer, union of separate TomX/BSDF contribution policies, owned-state restoration |
 | RendererPropertyBroker | Float/matrix/vector field leases; preserve unrelated MPB edits and newer external writers |
 | RenderResourceLease | Exclusive transient 2D/cubemap allocations, purpose/stage/encoding descriptors, accounting, optional owner budget, camera generation/invocation and explicit disposal |
@@ -63,7 +63,7 @@ the Probe role. Screen refraction and early DOF are excluded; legitimate scene
 lighting is not globally forbidden. Coincident realtime probe owners remain
 an error, not an ownership guess.
 
-DOF remains a local-only prototype, Native by default with scene Inherit.
+DOF remains a separate opt-in prototype, Native by default with scene Inherit.
 Only the private BSDF IL transpiler was removed; the guarded native DOF prefix
 remains. MCP is an optional client using the original facades, never a rendering
 dependency. Missing helper resources retain explicit unavailable/hard fallbacks.
@@ -76,7 +76,8 @@ replace them with duplicate game plugin DLLs. Fourteen original GUID/local-file-
 type/assembly records are checked through AssetDatabase.
 
 Shaders, LUTs, MaterialEditor catalogs, native assets and GPU algorithms remain
-in their shader projects. No shader edit, Bundle rebuild, game deployment,
-publication or KK adaptation is authorized by this integration. See
+in their shader projects. Runtime integration does not authorize a shader/Bundle
+rebuild or imply KK support. The 0.1.1 discovery revision and its explicit
+qualification scope are described in [Discovery Registry](Discovery-Registry.md). See
 [status and accepted evidence](Runtime-Integration.md) and
 [build/staging gates](Build-and-Staging.md).

@@ -207,7 +207,7 @@ namespace TomRenderValidation
                 registration=UnityCameraHub.Register(new object(),"Shared ownership discovery fixture",0,null,null,null);
                 var context=UnityCameraHub.Coordinator.Prepare(camera,camera.GetInstanceID(),Time.frameCount,0,512,384,CameraRole.View);
                 long scans=SceneDiscovery.RendererScans;var a=SceneDiscovery.Renderers();var b=SceneDiscovery.Renderers();
-                Assert(report,"Candidate discovery runs once per invocation",ReferenceEquals(a,b) && SceneDiscovery.RendererScans==scans+1);
+                Assert(report,"Camera discovery uses an indexed view without native scans",ReferenceEquals(a,b) && SceneDiscovery.RendererScans==scans);
                 var replacement=Own(owned,new Material(material));renderer.sharedMaterial=replacement;
                 var currentMaterials=new List<Material>();renderer.GetSharedMaterials(currentMaterials);Assert(report,"ME clones are read live, not cached",currentMaterials[0]==replacement);
                 var descriptor=new RenderResourceDescriptor{width=32,height=16,format=RenderTextureFormat.ARGBHalf,filter=FilterMode.Bilinear,linear=true,purpose="Validation color",stage="BeforeForwardAlpha"};

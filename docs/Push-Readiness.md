@@ -6,6 +6,18 @@ publication to TomRenderInfrastructure and dependency-split TomX/BSDF releases.
 Core/Probe/SceneEffects licensing is AGPL-3.0 with inherited notices preserved.
 This document records the release gates; permission is not inferred from a build.
 
+## 0.1.1 Discovery Update
+
+The maintainer separately authorized push/release after the 29 October shared
+registry qualification. Use the new `distribution/0.1.1.json`, its hash-bound
+freeze/acceptance and the matching read-only Bridge authoring export. Preserve
+all 0.1.0 locks, tags and historical evidence. Reuse accepted DLL/resource bytes,
+not a fresh untested compile. Eight-DLL base, two-DLL optional DOF and developer
+authoring archives remain separate. Verify local archive entries and remote
+asset digests before making the draft release public. The release documents
+fallback latency and separate rectangle-catalog/LightSettings issues; no Shader
+or Bundle is rebuilt. See [registry scope](Discovery-Registry.md).
+
 ## Source Candidate
 
 Include maintained `src`, build/test/integration tooling, project/solution files,

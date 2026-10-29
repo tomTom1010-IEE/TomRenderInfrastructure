@@ -178,8 +178,8 @@
         },
         {
             "path": "Assets/Mods/TomLightingProbes/Runtime/TomProbe.Runtime.dll",
-            "sha256": "147c69ebdd98eaa9494038c1e680f40f45d3096e10d779f31b0ea9b9e7164015",
-            "bytes": 38400
+            "sha256": "3bf18971aa0827c0721c717b67e842822046df312c1a6876aeb7c5d5f6ff6dac",
+            "bytes": 39424
         },
         {
             "path": "Assets/Mods/TomLightingProbes/Runtime/TomProbe.Runtime.dll.meta",
@@ -258,8 +258,8 @@
         },
         {
             "path": "Assets/TomRenderInfrastructure/Runtime/TomRender.Core.dll",
-            "sha256": "a96528f122a4ea7afdeba3c05b1b35e23d5daac21227118edb2198729e95f94f",
-            "bytes": 35328
+            "sha256": "1eebebfdf78c46d4b39e635f17c19de1eca0d77c848e0ca965d2ab29b1b165b3",
+            "bytes": 44544
         },
         {
             "path": "Assets/TomRenderInfrastructure/Runtime/TomRender.Core.dll.meta",

@@ -22,16 +22,26 @@ namespace TomBSDFRuntime
         readonly List<Saved> saved = new List<Saved>();
         readonly HashSet<Material> seen = new HashSet<Material>();
         readonly List<Material> materials = new List<Material>();
+        RendererInterest targets;
+        readonly bool ownsTargets;
         public int MaterialCount { get { return saved.Count; } }
+
+        public TomBSDFMaterialQualityScope()
+        { targets = SceneDiscovery.WatchShaders("BSDF area quality", IsFamily); ownsTargets = true; }
+        internal TomBSDFMaterialQualityScope(RendererInterest targets) { this.targets = targets; }
+
+        internal static bool IsFamily(Material material)
+        {
+            if (!material) return false;
+            string name = SceneDiscovery.ShaderName(material.shader);
+            return name == "tom/BSDF" || name == "tom/BSDFCutout"
+                || name == "tom/BSDFAlpha" || name == "tom/BSDFAlphaBackFront" || name == "tom/BSDFGlass"
+                || name == "tom/BSDFTess" || name == "tom/BSDFCutoutTess";
+        }
 
         public static bool Supports(Material material)
         {
-            if (!material || !material.shader) return false;
-            string name = material.shader.name;
-            bool identity = name == "tom/BSDF" || name == "tom/BSDFCutout"
-                || name == "tom/BSDFAlpha" || name == "tom/BSDFAlphaBackFront" || name == "tom/BSDFGlass"
-                || name == "tom/BSDFTess" || name == "tom/BSDFCutoutTess";
-            return identity && material.GetTag("TomBSDFAreaVariants", false, "") == "1";
+            return IsFamily(material) && material.GetTag("TomBSDFAreaVariants", false, "") == "1";
         }
 
         public static TomBSDFAreaPath Resolve(Material material, bool areaAvailable, bool captureReference)
@@ -55,13 +65,14 @@ namespace TomBSDFRuntime
 
         public void Begin(Camera camera, bool areaAvailable, bool captureReference)
         {
-            Dispose();
-            // Re-read shared materials and floats before every camera. This also
-            // catches ME clones, Timeline edits and shader switches in this frame.
-            // No renderer.material instantiation, persistent registry or asset scan.
-            foreach (var renderer in SceneDiscovery.Renderers())
+            Restore();
+            if (targets == null && ownsTargets) targets = SceneDiscovery.WatchShaders("BSDF area quality", IsFamily);
+            if (targets == null || !targets.Affects(camera)) return;
+            // Membership is cached; shared materials, tags and floats stay live.
+            for (int index = 0; index < targets.Count; index++)
             {
-                if (!renderer.enabled || !renderer.gameObject.activeInHierarchy
+                var renderer = targets[index];
+                if (!renderer || !renderer.enabled || !renderer.gameObject.activeInHierarchy
                     || (camera.cullingMask & (1 << renderer.gameObject.layer)) == 0) continue;
                 materials.Clear(); renderer.GetSharedMaterials(materials);
                 foreach (var material in materials) Apply(material, areaAvailable, captureReference);
@@ -81,6 +92,11 @@ namespace TomBSDFRuntime
         }
 
         public void Dispose()
+        {
+            Restore();
+            if (ownsTargets && targets != null) { targets.Dispose(); targets = null; }
+        }
+        void Restore()
         {
             for (int i = saved.Count - 1; i >= 0; i--)
             {

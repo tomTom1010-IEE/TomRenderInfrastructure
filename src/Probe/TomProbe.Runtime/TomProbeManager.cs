@@ -25,8 +25,17 @@ namespace TomProbeRuntime
         private MaterialPropertyBlock _propertyBlock;
         private float _nextAssignmentTime;
         private bool _assignmentDirty = true;
+        private RendererInterest _targets;
+        private readonly HashSet<Renderer> _visited = new HashSet<Renderer>();
+        private readonly List<Renderer> _stale = new List<Renderer>();
+        private readonly List<Material> _materials = new List<Material>();
 
-        private void Awake() { _propertyBlock = new MaterialPropertyBlock(); }
+        private void Awake()
+        {
+            _propertyBlock = new MaterialPropertyBlock();
+            _targets = SceneDiscovery.WatchShaders("SH volume receivers", HasCustomSH);
+        }
+        private static bool HasCustomSH(Material material) { return material && material.HasProperty(CustomBlendId); }
 
         public static void EnsureInstance()
         {
@@ -77,44 +86,55 @@ namespace TomProbeRuntime
         private void RefreshAssignments()
         {
             RemoveInvalidVolumes();
-            var renderers = SceneDiscovery.Renderers();
-            HashSet<Renderer> visited = new HashSet<Renderer>();
-
-            foreach (Renderer renderer in renderers)
+            bool ready = false;
+            for (int i = 0; i < Volumes.Count; i++)
+                if (Volumes[i] && Volumes[i].isActiveAndEnabled && Volumes[i].IsReady) { ready = true; break; }
+            if (!ready)
             {
+                foreach (var pair in _assignments) if (pair.Key) ClearVolume(pair.Key);
+                _assignments.Clear();
+                return;
+            }
+            SceneDiscovery.RefreshKnown();
+            _visited.Clear();
+
+            for (int index = 0; index < _targets.Count; index++)
+            {
+                var renderer = _targets[index];
                 if (!IsTargetRenderer(renderer))
                     continue;
 
-                visited.Add(renderer);
+                _visited.Add(renderer);
                 TomSHProbeVolume bestVolume = FindBestVolume(renderer.bounds.center);
                 ApplyVolume(renderer, bestVolume);
             }
 
-            List<Renderer> stale = new List<Renderer>();
+            _stale.Clear();
             foreach (KeyValuePair<Renderer, TomSHProbeVolume> pair in _assignments)
             {
-                if (pair.Key == null || !visited.Contains(pair.Key))
-                    stale.Add(pair.Key);
+                if (pair.Key == null || !_visited.Contains(pair.Key))
+                    _stale.Add(pair.Key);
             }
 
-            for (int i = 0; i < stale.Count; i++)
+            for (int i = 0; i < _stale.Count; i++)
             {
-                Renderer renderer = stale[i];
+                Renderer renderer = _stale[i];
                 if (renderer != null)
                     ClearVolume(renderer);
                 _assignments.Remove(renderer);
             }
+            _materials.Clear(); _visited.Clear(); _stale.Clear();
         }
 
-        private static bool IsTargetRenderer(Renderer renderer)
+        private bool IsTargetRenderer(Renderer renderer)
         {
             if (renderer == null || !renderer.enabled || !renderer.gameObject.activeInHierarchy)
                 return false;
 
-            Material[] materials = renderer.sharedMaterials;
-            for (int i = 0; i < materials.Length; i++)
+            _materials.Clear(); renderer.GetSharedMaterials(_materials);
+            for (int i = 0; i < _materials.Count; i++)
             {
-                Material material = materials[i];
+                Material material = _materials[i];
                 if (material != null && material.HasProperty(CustomBlendId))
                     return true;
             }
@@ -240,6 +260,8 @@ namespace TomProbeRuntime
             if (_instance != this) return;
             foreach (var pair in _assignments) if (pair.Key != null) ClearVolume(pair.Key);
             _assignments.Clear();
+            _materials.Clear(); _visited.Clear(); _stale.Clear();
+            if (_targets != null) { _targets.Dispose(); _targets = null; }
             _instance = null;
         }
     }

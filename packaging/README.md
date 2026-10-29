@@ -11,6 +11,36 @@ build contract; its historical status string is not the public release status.
 
 ## Maintainer Procedure
 
+### 0.1.1 Registry Update
+
+This patch uses `distribution/0.1.1.json`, not the historical 0.1.0 lock. Its
+accepted runtime fingerprint and private freeze, acceptance, evidence and cleanup
+hashes are immutable inputs. The packager verifies the current runtime/build
+fingerprint, frozen ABI-audited output hashes, exact eight-plus-two DLL inventory,
+unchanged Probe/Feather resources and the reviewed 53-file authoring inventory.
+
+After reviewing and committing the source, run:
+
+```powershell
+python packaging/package_registry_release.py `
+  --evidence-root '<qualified registry evidence directory>' `
+  --resource-root '<previous accepted Frozen/Payload directory>' `
+  --authoring-export '<fresh read-only Codex Bridge export>' `
+  --output '<new publication directory>'
+python -m unittest discover -s packaging -p 'test_*.py'
+```
+
+The resource root supplies only the two locked resource files, never its old
+DLLs. New DLLs come exclusively from the accepted registry build. Authoring
+Core/Probe DLLs must match that cohort; all native source/meta files must match
+the reviewed Git tree. Output contains the base, separate optional prototype,
+developer authoring ZIP and archive checksums. Every entry is read back and
+hashed; each archive identifies the corresponding source commit. Private
+diagnostics/scenes, SDKs and logs are not included. Packaging/English-doc changes
+do not replace runtime acceptance or mutate the old 0.1.0 history.
+
+### Historical 0.1.0 Coordinated Release
+
 1. Preserve the immutable freeze and passing, hash-bound live acceptance.
 2. Use the Editor exporter in `UnityEditor` through the matching Codex Bridge
    `exporttomrenderauthoring` dispatch to a **new** `Build/Source` directory.

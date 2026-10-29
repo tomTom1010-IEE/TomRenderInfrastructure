@@ -13,6 +13,7 @@ namespace TomBSDFPlugin
         TomBSDFSceneService service;
         TomBSDFDiagnostics diagnostics;
         ScreenshotQualityAdapter captureAdapter;
+        SceneDiscoveryHooks discoveryHooks;
         float nextCaptureLookup;
         void Awake()
         {
@@ -23,6 +24,7 @@ namespace TomBSDFPlugin
             var shadowBudget = Config.Bind("Alpha Shadows", "Copy Memory Budget MB", 128, "Maximum native shadow copy memory per camera. Unselected/over-budget lights retain the original transparent behavior; opaque materials are unchanged.");
             var bridge = Config.Bind("Validation", "File Bridge", false, "Explicit local validation commands only. No startup GPU tests. Results are written below UserData/TomBSDF/Validation.");
             service = TomBSDFSceneService.EnsureInstance();
+            discoveryHooks = new SceneDiscoveryHooks(Logger);
             service.extensionEnabled = active.Value;
             service.sceneBuffersEnabled = buffers.Value;
             service.captureReferenceEnabled = captureQuality.Value;
@@ -43,9 +45,10 @@ namespace TomBSDFPlugin
         }
         void Update()
         {
-            if (captureAdapter == null || captureAdapter.Connected || UnityEngine.Time.realtimeSinceStartup < nextCaptureLookup) return;
+            if (UnityEngine.Time.realtimeSinceStartup < nextCaptureLookup) return;
             nextCaptureLookup = UnityEngine.Time.realtimeSinceStartup + 5;
-            ConnectScreenshotManager();
+            if (captureAdapter != null && !captureAdapter.Connected) ConnectScreenshotManager();
+            if (discoveryHooks != null && !discoveryHooks.MaterialEditorConnected) discoveryHooks.ConnectMaterialEditor();
         }
         void ConnectScreenshotManager()
         {
@@ -59,6 +62,7 @@ namespace TomBSDFPlugin
         void OnDestroy()
         {
             if (captureAdapter != null) captureAdapter.Dispose();
+            if (discoveryHooks != null) discoveryHooks.Dispose();
             if (diagnostics) Destroy(diagnostics);
             if (service) Destroy(service.gameObject);
         }

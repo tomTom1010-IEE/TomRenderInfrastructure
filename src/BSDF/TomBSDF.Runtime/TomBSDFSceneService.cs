@@ -35,12 +35,14 @@ namespace TomBSDFRuntime
             public Camera camera;
             public long invocation;
             public Vector4 parameters;
-            public readonly TomBSDFMaterialQualityScope quality = new TomBSDFMaterialQualityScope();
+            public readonly TomBSDFMaterialQualityScope quality;
+            public State(RendererInterest targets) { quality = new TomBSDFMaterialQualityScope(targets); }
             public readonly Vector4[] center = new Vector4[MaxLights], right = new Vector4[MaxLights], up = new Vector4[MaxLights], radiance = new Vector4[MaxLights];
         }
         readonly List<State> states = new List<State>();
         int depth;
         System.IDisposable cameraRegistration;
+        RendererInterest areaRenderers;
 
         public static void Register(TomRectAreaLightControl light) { if (!Lights.Contains(light)) Lights.Add(light); }
         public static void Unregister(TomRectAreaLightControl light) { Lights.Remove(light); }
@@ -57,6 +59,8 @@ namespace TomBSDFRuntime
             if (instance && instance != this) { enabled = false; return; }
             instance = this;
             depth = 0;
+            states.Clear();
+            areaRenderers = SceneDiscovery.WatchShaders("BSDF area quality", TomBSDFMaterialQualityScope.IsFamily);
             Buffers = new TomBSDFSceneBuffers();
             Glass = new TomBSDFGlassConsumers();
             TessellationBounds = new TomBSDFTessellationBounds();
@@ -76,6 +80,7 @@ namespace TomBSDFRuntime
             if (TessellationBounds != null) { TessellationBounds.Dispose(); TessellationBounds = null; }
             if (Buffers != null) { Buffers.Dispose(); Buffers = null; }
             if (Shadows != null) { Shadows.Dispose(); Shadows = null; }
+            if (areaRenderers != null) { areaRenderers.Dispose(); areaRenderers = null; }
             if (instance == this) { depth = 0; Clear(); instance = null; }
         }
         public static void Clear() { Shader.SetGlobalVector(Params, Vector4.zero); TomBSDFSceneBuffers.ClearGlobals(); TomBSDFShadowReceivers.ClearGlobals(); }
@@ -124,7 +129,7 @@ namespace TomBSDFRuntime
             // A camera destroyed by a failed external render must not leak its state.
             if (depth > 0 && !states[depth - 1].camera) { RestoreMaterialQuality(); depth = 0; }
             if (depth >= 8) { RestoreMaterialQuality(); depth = 0; Clear(); return; }
-            if (states.Count <= depth) states.Add(new State());
+            if (states.Count <= depth) states.Add(new State(areaRenderers));
             var state = states[depth++]; state.camera = camera;
             var context = UnityCameraHub.Coordinator.Find(camera);
             state.invocation = context == null ? 0 : context.Id;

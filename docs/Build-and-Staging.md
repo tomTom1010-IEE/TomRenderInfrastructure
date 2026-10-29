@@ -71,6 +71,13 @@ changed proof hashes. It creates a new folder only under artifacts/staging.
 Its allowlisted inventory, dependencies, support documents and SHA256SUMS are
 a local DLL-only staging artifact, not an installer or authorization to deploy.
 
+The 0.1.1 discovery update has a separate, hash-bound qualification cohort. Its
+publication uses `packaging/package_registry_release.py` and
+`distribution/0.1.1.json`; it does not overwrite the old four-step integration
+acceptance or force the old staging gate to accept a different fingerprint.
+See [release packaging](../packaging/README.md). Runtime/build changes still
+require their own build, ABI, behavior and render qualification.
+
 | DLL | Destination under a future KKS game root |
 | --- | --- |
 | TomRender.Core.dll | BepInEx/plugins/TomRenderInfrastructure/ |

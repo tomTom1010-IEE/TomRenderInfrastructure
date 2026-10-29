@@ -20,7 +20,11 @@ namespace TomBSDFRuntime
         readonly List<Material> materials = new List<Material>();
         readonly List<Camera> active = new List<Camera>();
         readonly List<int> dead = new List<int>();
+        readonly Plane[] planes = new Plane[6];
+        readonly RendererInterest targets = SceneDiscovery.WatchShaders("BSDF refractive glass", IsGlass);
         int sequence;
+        static bool IsGlass(Material material)
+        { return material && SceneDiscovery.ShaderName(material.shader) == "tom/BSDFGlass"; }
         public int CameraCount { get { return entries.Count; } }
         internal bool OwnsCamera(Camera camera) { return active.Count > 0 && active[active.Count - 1] == camera; }
 
@@ -32,18 +36,19 @@ namespace TomBSDFRuntime
             if (!enabled && active.Count == 0) { foreach (var e in entries.Values) if (e.lease != null) e.lease.Dispose(); entries.Clear(); }
             bool demand = false;
             var resolution = TomSceneBufferResolution.Half;
-            if (enabled && !CameraRoles.IsAuxiliaryCapture(camera) && camera.cameraType != CameraType.Reflection && camera.cameraType != CameraType.Preview && !camera.stereoEnabled)
+            if (enabled && !CameraRoles.IsAuxiliaryCapture(camera) && camera.cameraType != CameraType.Reflection && camera.cameraType != CameraType.Preview && !camera.stereoEnabled && targets.Affects(camera))
             {
-                var planes = GeometryUtility.CalculateFrustumPlanes(camera);
-                foreach (var renderer in SceneDiscovery.Renderers())
+                GeometryUtility.CalculateFrustumPlanes(camera, planes);
+                for (int index = 0; index < targets.Count; index++)
                 {
-                    if (!renderer.enabled || !renderer.gameObject.activeInHierarchy
+                    var renderer = targets[index];
+                    if (!renderer || !renderer.enabled || !renderer.gameObject.activeInHierarchy
                         || (camera.cullingMask & (1 << renderer.gameObject.layer)) == 0
                         || !GeometryUtility.TestPlanesAABB(planes, renderer.bounds)) continue;
                     materials.Clear(); renderer.GetSharedMaterials(materials);
                     foreach (var m in materials)
                     {
-                        if (!m || !m.shader || m.shader.name != "tom/BSDFGlass"
+                        if (!IsGlass(m)
                             || m.GetFloat("_UseSceneRefraction") < .5f || m.GetFloat("_Coverage") <= 0) continue;
                         demand = true;
                         if (m.GetFloat("_GlassBufferResolution") < 1.5f) resolution = TomSceneBufferResolution.Full;
@@ -94,6 +99,7 @@ namespace TomBSDFRuntime
         {
             foreach (var entry in entries.Values) if (entry.lease != null) entry.lease.Dispose();
             entries.Clear(); active.Clear(); materials.Clear();
+            targets.Dispose();
         }
     }
 }
