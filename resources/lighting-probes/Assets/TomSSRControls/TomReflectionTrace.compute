@@ -1,0 +1,81 @@
+#pragma kernel Trace
+#pragma only_renderers d3d11
+
+// Canonical D3D texture coordinates, origin top-left. Matrices map view space
+// to this texture's D3D clip space. Depth is raw device Z (not averaged MSAA).
+Texture2D<float> NativeDepth;
+Texture2D<float4> SceneLinear;
+Texture2D<float4> BaseFrame, CoatFrame; // view-space normal.xyz, perceptual roughness; zero normal = no receiver
+SamplerState sampler_linear_clamp;
+RWTexture2D<float4> BaseHit, CoatHit;   // unweighted linear radiance, confidence
+float4x4 Projection, InvProjection;
+float4 SourceDimensions, TraceDimensions;
+#define SourceSize ((int2)SourceDimensions.xy)
+#define TraceSize ((int2)TraceDimensions.xy)
+int Steps, ReversedZ, Orthographic, LastColorMip;
+float MaxDistance, Thickness, NearClip;
+
+float2 uvOf(float4 clip) { return clip.xy / clip.w * float2(0.5,-0.5) + 0.5; }
+float3 reconstruct(float2 uv, float z) {
+    float4 h = mul(InvProjection, float4((uv*2-1)*float2(1,-1), z, 1));
+    return h.xyz / h.w;
+}
+bool skyDepth(float raw) { return ReversedZ != 0 ? raw <= 0 : raw >= 1; }
+float4 march(float3 p, float4 frame) {
+    if (dot(frame.xyz,frame.xyz) < 0.25 || frame.w >= 0.95) return 0;
+    float3 n=normalize(frame.xyz);
+    float3 incident=Orthographic != 0 ? float3(0,0,-1) : normalize(p);
+    float3 ray=reflect(incident,n);
+    float bias=max(0.006, min(Thickness*0.25, -p.z*0.001));
+    float3 a=p+(n+ray)*bias;
+    float len=ray.z>0.00001 ? min(MaxDistance,(-NearClip-a.z)/ray.z) : MaxDistance;
+    if(len<=bias) return 0;
+    float3 b=a+ray*len;
+    float4 ac=mul(Projection,float4(a,1)), bc=mul(Projection,float4(b,1));
+    if(min(ac.w,bc.w)<=0) return 0;
+    float2 ua=uvOf(ac), ub=uvOf(bc), d=ub-ua;
+    // Clip to the viewport before allocating the finite sample budget; rays
+    // toward the near plane otherwise waste almost every step off screen.
+    float2 limit=(step(0,d)-ua) / (float2(d.x<0?-1:1,d.y<0?-1:1)*max(abs(d),1e-8));
+    float end=min(1.0,min(limit.x,limit.y));
+    float pixels=length(d*end*SourceSize);
+    if(end<=0 || pixels<=2) return 0;
+    int count=clamp((int)ceil(pixels),2,clamp(Steps,2,128));
+    float2 origin=uvOf(mul(Projection,float4(p,1)));
+    float2 invW=rcp(float2(ac.w,bc.w));
+    float2 eyeOverW=-float2(a.z,b.z)*invW;
+    [loop] for(int i=1;i<=count;i++) {
+        float t=end*(float(i)/count), prev=end*(float(i-1)/count);
+        float2 uv=ua+t*d;
+        float edge=min(min(uv.x,uv.y),min(1-uv.x,1-uv.y));
+        if(edge<=0) break;
+        if(length((uv-origin)*SourceSize)<2) continue;
+        int2 xy=clamp((int2)(uv*SourceSize),0,SourceSize-1);
+        float raw=NativeDepth.Load(int3(xy,0));
+        if(skyDepth(raw)) continue;
+        float sceneZ=-reconstruct((xy+.5)/SourceSize,raw).z;
+        float z=lerp(eyeOverW.x,eyeOverW.y,t)/lerp(invW.x,invW.y,t);
+        float prevZ=lerp(eyeOverW.x,eyeOverW.y,prev)/lerp(invW.x,invW.y,prev);
+        if(min(z,prevZ)>sceneZ+Thickness || max(z,prevZ)<sceneZ) continue;
+        // Don't immediately accept another texel on the origin surface.
+        if(abs(sceneZ+p.z)<bias*2) continue;
+        float r=saturate(frame.w);
+        float lod=clamp(log2(1+r*r*length((uv-origin)*SourceSize)),0,(float)LastColorMip);
+        float confidence=smoothstep(0,0.035,edge)*(1-smoothstep(0.65,0.95,r));
+        float4 hdr=SceneLinear.SampleLevel(sampler_linear_clamp,uv,lod);
+        return float4(hdr.rgb/max(1e-5,hdr.a),confidence*saturate(hdr.a));
+    }
+    return 0;
+}
+[numthreads(8,8,1)] void Trace(uint2 id:SV_DispatchThreadID) {
+    if(any(id>=(uint2)TraceSize)) return;
+    int2 pixel=min((int2)((id+0.5)*SourceSize/TraceSize), SourceSize-1);
+    float z=NativeDepth.Load(int3(pixel,0));
+    float4 base=0,coat=0;
+    if(!skyDepth(z)) {
+        float3 p=reconstruct((pixel+.5)/SourceSize,z);
+        base=march(p,BaseFrame.Load(int3(pixel,0)));
+        coat=march(p,CoatFrame.Load(int3(pixel,0)));
+    }
+    BaseHit[id]=base; CoatHit[id]=coat;
+}

@@ -1,0 +1,13 @@
+{
+  "version": "0.2.6",
+  "guid": "tom.lightingprobes",
+  "file": "Tom-Lighting-Probes-KKS-0.2.6.zipmod",
+  "bytes": 81742,
+  "sha256": "d9b53b343cf21de348b7c266e56178901e917aed6dfa54d2c238511f5eeb1217",
+  "bundles": {
+    "abdata/chara/tom/renderinfrastructure/planar.unity3d": "aec1239311ea2d35048487a2f2efbcf3d429d497cb763d23706e398ad0b9f4fc",
+    "abdata/chara/tom/renderinfrastructure/ssr.unity3d": "8d3097d40e3d6c7b8a8393e745e0cdd86ee5c1792a20447d6f1d742a42102b5a",
+    "abdata/studio/tom/tom_lighting_probes.unity3d": "d904a499082a9864e7055f474f727349160950dab525e40a494188f7fc4d733a",
+    "abdata/studio/tom/me/lighting_control_sources.unity3d": "c4df9173883205ea038ea97f0abc8d44d228e9f75926b3577fde796910f64ea9"
+  }
+}
