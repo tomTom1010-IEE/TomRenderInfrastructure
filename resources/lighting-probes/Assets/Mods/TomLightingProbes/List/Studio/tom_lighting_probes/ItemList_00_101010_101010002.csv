@@ -1,0 +1,3 @@
+ID,Group Number,Category Number,Name,Manifest,Bundle Path,File Name,Child Attachment Transform,Animation,Color 1,Pattern 1,Color 2,Pattern 2,Color 3,Pattern 3,Scaling,Emission
+6,101010,101010002,Planar Reflection Surface,,chara/tom/renderinfrastructure/planar.unity3d,a_PlanarReflectionSurface,,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+7,101010,101010002,Screen Space Reflection Settings,,chara/tom/renderinfrastructure/ssr.unity3d,a_ScreenReflectionSettings,,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE

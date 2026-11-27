@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manifest schema-ver="1">
+  <guid>tom.lightingprobes</guid>
+  <name>Tom Lighting Probes</name>
+  <version>0.2.6</version>
+  <author>tomTom</author>
+  <description>Reflection probes, SH volumes and optional planar and screen-space reflection controls for KKS Studio.</description>
+  <website>https://github.com/tomTom1010-IEE/TomRenderInfrastructure</website>
+  <game>Koikatsu Sunshine</game>
+  <MaterialEditor>
+    <TooltipCatalog AssetBundle="studio/tom/tom_lighting_probes.unity3d" Asset="tom_probe_tooltips" />
+    <Shader Name="tom/ReflectionProbeControl" AssetBundle="studio/tom/me/lighting_control_sources.unity3d" Asset="a_ReflectionProbeControlME">
+      <Property Name="ProbeEnabled" Category="Probe" Type="Float" Range="0, 1" />
+      <Property Name="ProbeIntensity" Category="Probe" Type="Float" Range="0, 8" />
+      <Property Name="ProbePriority" Category="Probe" Type="Float" Range="0, 100" />
+      <Property Name="ProbeGroup" Category="Updates" Type="Float" Range="0, 999" />
+      <Property Name="ProbeRefreshScope" Category="Updates" Type="Float" Range="0, 2" />
+      <Property Name="ProbeRefresh" Category="Updates" Type="Float" Range="0, 1" />
+      <Property Name="ProbeUpdateMode" Category="Updates" Type="Float" Range="0, 3" />
+      <Property Name="ProbeCaptureOnLoad" Category="Updates" Type="Float" Range="0, 1" />
+      <Property Name="ProbeInterval" Category="Updates" Type="Float" Range="0.5, 3600" />
+      <Property Name="ProbeNearClip" Category="Capture" Type="Float" Range="0.01, 100" />
+      <Property Name="ProbeFarClip" Category="Capture" Type="Float" Range="0.02, 2000" />
+      <Property Name="ProbeShadowDistance" Category="Capture" Type="Float" Range="0, 500" />
+      <Property Name="ProbeCapturePreset" Category="Capture" Type="Float" Range="0, 2" />
+      <Property Name="ProbeMaskLow" Category="Capture" Type="Float" Range="0, 65535" />
+      <Property Name="ProbeMaskHigh" Category="Capture" Type="Float" Range="0, 65535" />
+      <Property Name="ProbeSkybox" Category="Capture" Type="Float" Range="0, 1" />
+      <Property Name="ProbeBackground" Category="Capture" Type="Color" />
+      <Property Name="ProbeSizeX" Category="World Bounds" Type="Float" Range="0.01, 1000" />
+      <Property Name="ProbeSizeY" Category="World Bounds" Type="Float" Range="0.01, 1000" />
+      <Property Name="ProbeSizeZ" Category="World Bounds" Type="Float" Range="0.01, 1000" />
+      <Property Name="ProbeOffsetX" Category="World Bounds" Type="Float" Range="-1000, 1000" />
+      <Property Name="ProbeOffsetY" Category="World Bounds" Type="Float" Range="-1000, 1000" />
+      <Property Name="ProbeOffsetZ" Category="World Bounds" Type="Float" Range="-1000, 1000" />
+      <Property Name="ProbeQuality" Category="Reflection" Type="Float" Range="0, 2" />
+      <Property Name="ProbeHDR" Category="Reflection" Type="Float" Range="0, 1" />
+      <Property Name="ProbeBoxProjection" Category="Reflection" Type="Float" Range="0, 1" />
+      <Property Name="ProbeBlendDistance" Category="Reflection" Type="Float" Range="0, 100" />
+      <Property Name="ProbeTimeSlicing" Category="Reflection" Type="Float" Range="0, 2" />
+    </Shader>
+    <Shader Name="tom/SHVolumeControl" AssetBundle="studio/tom/me/lighting_control_sources.unity3d" Asset="a_SHVolumeControlME">
+      <Property Name="ProbeEnabled" Category="Probe" Type="Float" Range="0, 1" />
+      <Property Name="ProbeIntensity" Category="Probe" Type="Float" Range="0, 8" />
+      <Property Name="ProbePriority" Category="Probe" Type="Float" Range="0, 100" />
+      <Property Name="ProbeGroup" Category="Updates" Type="Float" Range="0, 999" />
+      <Property Name="ProbeRefreshScope" Category="Updates" Type="Float" Range="0, 2" />
+      <Property Name="ProbeRefresh" Category="Updates" Type="Float" Range="0, 1" />
+      <Property Name="ProbeUpdateMode" Category="Updates" Type="Float" Range="0, 3" />
+      <Property Name="ProbeCaptureOnLoad" Category="Updates" Type="Float" Range="0, 1" />
+      <Property Name="ProbeInterval" Category="Updates" Type="Float" Range="5, 3600" />
+      <Property Name="ProbeNearClip" Category="Capture" Type="Float" Range="0.01, 100" />
+      <Property Name="ProbeFarClip" Category="Capture" Type="Float" Range="0.02, 2000" />
+      <Property Name="ProbeShadowDistance" Category="Capture" Type="Float" Range="0, 500" />
+      <Property Name="ProbeCapturePreset" Category="Capture" Type="Float" Range="0, 2" />
+      <Property Name="ProbeMaskLow" Category="Capture" Type="Float" Range="0, 65535" />
+      <Property Name="ProbeMaskHigh" Category="Capture" Type="Float" Range="0, 65535" />
+      <Property Name="ProbeSkybox" Category="Capture" Type="Float" Range="0, 1" />
+      <Property Name="ProbeBackground" Category="Capture" Type="Color" />
+      <Property Name="ProbeSizeX" Category="World Bounds" Type="Float" Range="0.01, 1000" />
+      <Property Name="ProbeSizeY" Category="World Bounds" Type="Float" Range="0.01, 1000" />
+      <Property Name="ProbeSizeZ" Category="World Bounds" Type="Float" Range="0.01, 1000" />
+      <Property Name="ProbeOffsetX" Category="World Bounds" Type="Float" Range="-1000, 1000" />
+      <Property Name="ProbeOffsetY" Category="World Bounds" Type="Float" Range="-1000, 1000" />
+      <Property Name="ProbeOffsetZ" Category="World Bounds" Type="Float" Range="-1000, 1000" />
+      <Property Name="SHGridX" Category="SH" Type="Float" Range="2, 8" />
+      <Property Name="SHGridY" Category="SH" Type="Float" Range="2, 8" />
+      <Property Name="SHGridZ" Category="SH" Type="Float" Range="2, 8" />
+      <Property Name="SHCaptureQuality" Category="SH" Type="Float" Range="0, 3" />
+      <Property Name="SHEdgeFade" Category="SH" Type="Float" Range="0, 0.49" />
+      <Property Name="SHSamplesPerFrame" Category="SH" Type="Float" Range="1, 4" />
+      <Property Name="ProbeOcclusionCulling" Category="Capture" Type="Float" Range="0, 1" />
+    </Shader>
+    <Shader Name="tom/PlanarReflectionControl" AssetBundle="chara/tom/renderinfrastructure/planar.unity3d" Asset="a_PlanarReflectionControlME">
+      <Property Name="PlanarPlaneEnabled" Type="Float" Category="Plane" Range="0, 1" DefaultValue="1" />
+      <Property Name="PlanarPlaneWidth" Type="Float" Category="Plane" Range="0.01, 1000" DefaultValue="10" />
+      <Property Name="PlanarPlaneLength" Type="Float" Category="Plane" Range="0.01, 1000" DefaultValue="10" />
+      <Property Name="PlanarHeightTolerance" Type="Float" Category="Plane" Range="0.001, 2" DefaultValue="0.05" />
+      <Property Name="PlanarEdgeFade" Type="Float" Category="Plane" Range="0, 10" DefaultValue="0.25" />
+      <Property Name="PlanarPlaneGroup" Type="Float" Category="Assignment" Range="0, 65535" DefaultValue="0" />
+      <Property Name="PlanarPlanePriority" Type="Float" Category="Assignment" Range="-32768, 32767" DefaultValue="0" />
+      <Property Name="PlanarNear" Type="Float" Category="Range" Range="0, 10000" DefaultValue="0" />
+      <Property Name="PlanarFar" Type="Float" Category="Range" Range="0, 10000" DefaultValue="0" />
+      <Property Name="PlanarNearFade" Type="Float" Category="Range" Range="0, 10000" DefaultValue="0.5" />
+      <Property Name="PlanarFarFade" Type="Float" Category="Range" Range="0, 10000" DefaultValue="2" />
+      <Property Name="PlanarClipBias" Type="Float" Category="Capture" Range="0.0001, 0.1" DefaultValue="0.01" />
+      <Property Name="PlanarCaptureLayersLo" Type="Float" Category="Capture" Range="0, 65535" DefaultValue="65535" />
+      <Property Name="PlanarCaptureLayersHi" Type="Float" Category="Capture" Range="0, 65535" DefaultValue="65535" />
+      <Property Name="PlanarContentMode" Type="Float" Category="Content" Range="0, 1" DefaultValue="1" />
+      <Property Name="PlanarIncludeRain" Type="Float" Category="Content" Range="0, 1" DefaultValue="0" />
+      <Property Name="PlanarAdaptive" Type="Float" Category="Live Quality" Range="0, 1" DefaultValue="1" />
+      <Property Name="PlanarBudget" Type="Float" Category="Live Quality" Range="0.25, 32" DefaultValue="6" />
+      <Property Name="PlanarRealtimeScale" Type="Float" Category="Live Quality" Range="0.25, 1" DefaultValue="0.5" />
+      <Property Name="PlanarUpdateInterval" Type="Float" Category="Live Quality" Range="1, 4" DefaultValue="1" />
+    </Shader>
+  <Shader Name="tom/ScreenReflectionControl" AssetBundle="chara/tom/renderinfrastructure/ssr.unity3d" Asset="a_ScreenReflectionControlME">
+  <Property Name="ScreenReflectionEnabled" Type="Float" Range="0, 1" DefaultValue="1" Category="Reflections" />
+  <Property Name="ScreenReflectionLiveScale" Type="Float" Range="0.25, 1" DefaultValue="0.5" Category="Live Quality" />
+  <Property Name="ScreenReflectionSteps" Type="Float" Range="8, 128" DefaultValue="64" Category="Trace" />
+  <Property Name="ScreenReflectionDistance" Type="Float" Range="0.1, 100" DefaultValue="24" Category="Trace" />
+  <Property Name="ScreenReflectionThickness" Type="Float" Range="0.01, 1" DefaultValue="0.25" Category="Trace" />
+</Shader></MaterialEditor>
+</manifest>

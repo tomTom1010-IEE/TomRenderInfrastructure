@@ -1,0 +1,6 @@
+ID,Group Number,Category Number,Name,Manifest,Bundle Path,File Name,Child Attachment Transform,Animation,Color 1,Pattern 1,Color 2,Pattern 2,Color 3,Pattern 3,Scaling,Emission
+1,101010,101010001,Tom Reflection Probe 256 Fast,,studio/tom/tom_lighting_probes.unity3d,a_TomReflectionProbe256,,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+2,101010,101010001,Tom Reflection Probe 512 Standard,,studio/tom/tom_lighting_probes.unity3d,a_TomReflectionProbe512,,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+3,101010,101010001,Tom Reflection Probe 1024 High,,studio/tom/tom_lighting_probes.unity3d,a_TomReflectionProbe1024,,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+4,101010,101010001,Tom SH Volume 3x2x3 Fast,,studio/tom/tom_lighting_probes.unity3d,a_TomSHVolumeFast,,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+5,101010,101010001,Tom SH Volume 4x3x4 Standard,,studio/tom/tom_lighting_probes.unity3d,a_TomSHVolumeStandard,,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE

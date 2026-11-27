@@ -10,6 +10,8 @@ and/or [TomBSDF](https://github.com/tomTom1010-IEE/TomBSDF/releases) shader pack
 Shader releases no longer bundle these DLLs. Install this base **once**, not once
 per shader project. See [installation and upgrades](INSTALL.md).
 
+**KKS resource update:** after installing the base, replace its older `tom.lightingprobes` zipmod with [Tom Lighting Probes 0.2.6](https://github.com/tomTom1010-IEE/TomRenderInfrastructure/releases/tag/lighting-probes-v0.2.6). This fixes the 512 Standard and SH Standard items without changing any DLLs or MaterialEditor. [Details](resources/lighting-probes/README.md).
+
 **Status:** version 0.1.1 fixes the scene-size-dependent discovery overhead in
 0.1.0. The shared registry, BSDF, Probe and TomX migration passed Editor and
 controlled KKS Studio regression on 29 October 2026. In the supplied large-scene
